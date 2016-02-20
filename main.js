@@ -44,7 +44,7 @@ app.get('/oauth2callback', function(req, res) {
 		"textFormat": "plainText",
 		auth: oauth2Client
 	})
-	x.execute(, function(res) {
+	x.execute(function(res) {
 		console.log(JSON.stringify(res))
 	})
 });
