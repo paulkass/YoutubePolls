@@ -38,10 +38,9 @@ app.get('/oauth2callback', function(req, res) {
   			console.log(JSON.stringify(err))
   		}
 	});
-	youtube.comments.list({
-		"part": "snippet",
-		"textFormat": "plainText",
-		auth: oauth2Client
+	youtube.search.list({
+		part: "snippet",
+		q: "holograms"
 	}, function(res) {
 		console.log(JSON.stringify(res))
 	})
