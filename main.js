@@ -2,7 +2,7 @@ console.log("app started")
 
 var CLIENT_ID = '974118819904-j47m556oudl4ao3q716ib8ktq4e0uohn.apps.googleusercontent.com'
 var CLIENT_SECRET = 'y5qJVqIbihHKntf6NbV6yzon'
-var REDIRECT_URL = 'http://youtubepolls.herokuapp.com/authorized'
+var REDIRECT_URL = 'http://youtubepolls.herokuapp.com/oauth2callback'
 
 var express = require('express')
 var google = require('googleapis')
@@ -35,6 +35,11 @@ app.get('/', function(req, res) {
 // 	}, function(res) {
 // 		console.log(JSON.stringify(res))
 // 	})
+});
+
+app.get('/oauth2callback', function(req, res) {
+	var code = req.query.code
+	res.send(code)
 });
 
 app.listen(app.get('port'), function() {
