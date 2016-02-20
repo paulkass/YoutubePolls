@@ -40,7 +40,7 @@ app.get('/oauth2callback', function(req, res) {
 	oauth2Client.getToken(code, function(err, tokens) {
   		// Now tokens contains an access_token and an optional refresh_token. Save them.
   		if(!err) {
-    		oauth2Client.setCredentials(tokens);
+    		//oauth2Client.setCredentials(tokens);
     		console.log("OAuth Authentication Finished.")
   		} else {
   			console.log(JSON.stringify(err))
