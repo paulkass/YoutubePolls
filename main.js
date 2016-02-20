@@ -34,16 +34,17 @@ app.get('/oauth2callback', function(req, res) {
   		if(!err) {
     		oauth2Client.setCredentials(tokens);
     		console.log("OAuth Authentication Finished.")
+    		youtube.search.list({
+				part: "snippet",
+				q: "holograms",
+				auth: oauth2Client
+			}, function(res) {
+				console.log(JSON.stringify(res))
+			})
   		} else {
   			console.log(JSON.stringify(err))
   		}
 	});
-	youtube.search.list({
-		part: "snippet",
-		q: "holograms"
-	}, function(res) {
-		console.log(JSON.stringify(res))
-	})
 });
 
 app.listen(app.get('port'), function() {
