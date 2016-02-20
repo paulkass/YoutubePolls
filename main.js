@@ -25,21 +25,12 @@ app.get('/', function(req, res) {
 	})
 	
 	res.redirect(url);
-	
-	// youtube.comments.list({
-// 		"part": "snippet",
-// 		"parentId": "9bZkp7q19f0",
-// 		"textFormat": "plainText"
-// 	}, function(res) {
-// 		console.log(JSON.stringify(res))
-// 	})
 });
 
 app.get('/oauth2callback', function(req, res) {
 	var code = req.query.code
 	res.sendfile("index.html")
 	oauth2Client.getToken(code, function(err, tokens) {
-  		// Now tokens contains an access_token and an optional refresh_token. Save them.
   		if(!err) {
     		oauth2Client.setCredentials(tokens);
     		console.log("OAuth Authentication Finished.")
@@ -47,6 +38,14 @@ app.get('/oauth2callback', function(req, res) {
   			console.log(JSON.stringify(err))
   		}
 	});
+	youtube.comments.list({
+		"part": "snippet",
+		"parentId": "9bZkp7q19f0",
+		"textFormat": "plainText",
+		auth: oauth2Client
+	}, function(res) {
+		console.log(JSON.stringify(res))
+	})
 });
 
 app.listen(app.get('port'), function() {
