@@ -39,7 +39,12 @@ app.get('/', function(req, res) {
 
 app.get('/oauth2callback', function(req, res) {
 	var code = req.query.code
-	res.send(code)
+	oauth2Client.getToken(code, function(err, tokens) {
+  		// Now tokens contains an access_token and an optional refresh_token. Save them.
+  		if(!err) {
+    		oauth2Client.setCredentials(tokens);
+  		}
+	});
 });
 
 app.listen(app.get('port'), function() {
