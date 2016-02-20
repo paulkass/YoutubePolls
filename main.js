@@ -11,15 +11,13 @@ var youtube = google.youtube('v3')
 
 var app = express()
 
-var oauth2Client = {}
+var oauth2Client = new OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URL)
 
 app.set('port', (process.env.PORT || 5000));
 
 app.get('/', function(req, res) {
 	console.log("Got Request")
 	//res.sendfile("index.html")
-	
-	oauth2Client = new OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URL)
 	var scopes = ['https://www.googleapis.com/auth/youtube']
 	
 	var url = oauth2Client.generateAuthUrl({
@@ -43,6 +41,9 @@ app.get('/oauth2callback', function(req, res) {
   		// Now tokens contains an access_token and an optional refresh_token. Save them.
   		if(!err) {
     		oauth2Client.setCredentials(tokens);
+    		console.log("OAuth Authentication Finished.")
+  		} else {
+  			console.log(JSON.stringify(err))
   		}
 	});
 });
