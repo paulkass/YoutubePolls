@@ -29,7 +29,7 @@ app.get('/', function(req, res) {
 
 app.get('/oauth2callback', function(req, res) {
 	var code = req.query.code
-	res.sendFile("index.html")
+	res.sendfile("index.html")
 	oauth2Client.getToken(code, function(err, tokens) {
   		if(!err) {
     		oauth2Client.setCredentials(tokens);
