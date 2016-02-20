@@ -38,13 +38,12 @@ app.get('/oauth2callback', function(req, res) {
   			console.log(JSON.stringify(err))
   		}
 	});
-	var x = youtube.comments.list({
+	youtube.comments.list({
 		"part": "snippet",
 		"parentId": "9bZkp7q19f0",
 		"textFormat": "plainText",
 		auth: oauth2Client
-	})
-	x.execute(function(res) {
+	}, function(res) {
 		console.log(JSON.stringify(res))
 	})
 });
