@@ -29,7 +29,7 @@ app.get('/', function(req, res) {
 
 app.get('/oauth2callback', function(req, res) {
 	var code = req.query.code
-	res.sendfile("index.html")
+	res.sendFile("index.html")
 	oauth2Client.getToken(code, function(err, tokens) {
   		if(!err) {
     		oauth2Client.setCredentials(tokens);
@@ -38,12 +38,13 @@ app.get('/oauth2callback', function(req, res) {
   			console.log(JSON.stringify(err))
   		}
 	});
-	youtube.comments.list({
+	var x = youtube.comments.list({
 		"part": "snippet",
 		"parentId": "9bZkp7q19f0",
 		"textFormat": "plainText",
 		auth: oauth2Client
-	}, function(res) {
+	})
+	x.execute(, function(res) {
 		console.log(JSON.stringify(res))
 	})
 });
