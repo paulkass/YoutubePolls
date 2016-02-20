@@ -40,7 +40,6 @@ app.get('/oauth2callback', function(req, res) {
 	});
 	youtube.comments.list({
 		"part": "snippet",
-		"parentId": "9bZkp7q19f0",
 		"textFormat": "plainText",
 		auth: oauth2Client
 	}, function(res) {
