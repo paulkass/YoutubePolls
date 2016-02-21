@@ -9,7 +9,6 @@ $(document).ready(function() {
 			submitQuery();
 	});
 	
-function websocketOpen() {
 	ws = new WebSocket(host);
  	ws.onmessage = function(event){
 		if(event.data === "")
@@ -64,13 +63,6 @@ function websocketOpen() {
 
 		var chart = new Chart(ctx).Doughnut(chartData, chartOptions)
 	};
-	
-	ws.on('close', function() {
-		console.log("Reopening Socket")
-		webSocketOpen()
-	});
-}
-webSocketOpen();
 });
 
 

@@ -31,27 +31,28 @@ console.log("websocket server created")
 
 //app.set('port', port);
 function setUpSocket() {
-wss.on("connection", function(ws) {
- 	console.log("websocket connection open")
-	ws.on("message", function(data, flags) {
-  		var stuff = data.split("::")
-  		var id = stuff[0]
-  		var data = stuff[1]
+	wss.on("connection", function(ws) {
+ 		console.log("websocket connection open")
+		ws.on("message", function(data, flags) {
+  			var stuff = data.split("::")
+  			var id = stuff[0]
+  			var data = stuff[1]
   		
-  		switch (id) {
-  			case "query":
-  				callQuery(data, function(data) {
-  					console.log("In callback")
-  					ws.send("object::"+JSON.stringify(data))
-  				})
-  				break
-  			default:
+  			switch (id) {
+  				case "query":
+  					callQuery(data, function(data) {
+  						console.log("In callback")
+  						ws.send("object::"+JSON.stringify(data))
+  					})
+  					break
+  				default:
   			
-  		}
-  });
-  ws.on("close", function() {
-    console.log("websocket connection close")
-  })
+  			}
+  	});
+  	ws.on("close", function() {
+    	console.log("websocket connection close")
+    	setUpSocket()
+  	})
 })
 }
 
