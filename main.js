@@ -100,54 +100,60 @@ function callQuery(query) {
 //   }
 // });
 	var comments = []
-	youtube.search.list({
+	var first = youtube.search.list({
     	part: 'snippet',
     	q: query,
     	key: API_KEY,
     	maxResults:3
-    }, first)
+    })
+    comments = processfirst(first)
 	console.log("analyzing " +JSON.stringify(comments))
 	return doAnalytics(comments)
 }
 
-function first(err, response){
-	if (err)
+function processfirst(response){
+	
+	if(response.items[0].id.videoId === undefined)
 	{
-    	console.log("1 " + JSON.stringify(err))
-    	return
-    }
-    else
-    {
+		console.log("1 " + JSON.stringify(response))
+		return
+	}
+	else
+	{
+		var comments = []
 		for(var i=0; i<response.items.length; i++)
 		{
 			console.log(i + " "+response.items[i].id.videoId)
-			youtube.commentThreads.list({
+			var second = youtube.commentThreads.list({
 				videoId: response.items[i].id.videoId,
 				part: 'snippet',
 				textFormat: "plainText",
 				maxResults: 10,
 				key: API_KEY
-			}, second)
+			})
+			comments.concat(processsecond(second))
 		}
-    }
-    console.log(JSON.stringify(comments))
+		return comments
+	}
+
 }
 
-function second(err, response){
-	if (err)
+function processsecond(response){
+	if(response.items[0].snippet.topLevelComment.snippet.textDisplay === undefined)
 	{
-		console.log("2 " + JSON.stringify(err))
+		console.log("1 " + JSON.stringify(response))
 		return
 	}
 	else
 	{
+		var comments = []
 		for (var x=0; x<response.items.length; x++)
 		{
 			var text = response.items[x].snippet.topLevelComment.snippet.textDisplay
 			comments.push(text)
 		}
+		return comments
 	}
-	console.log(JSON.stringify(comments))
 }
 
 function doAnalytics(arr) {
