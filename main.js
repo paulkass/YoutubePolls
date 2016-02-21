@@ -22,13 +22,14 @@ server.listen(port)
 var WebSocketServer = require("ws").Server
 var wss = new WebSocketServer({server: server})
 console.log("websocket server created")
+var retdata
 
 //var oauth2Client = new OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URL)
 
 //app.set('port', port);
 
 wss.on("connection", function(ws) {
-  
+  console.log("websocket connection open")
   ws.on("message", function(data, flags) {
   		var stuff = data.split("::")
   		var id = stuff[0]
@@ -36,26 +37,20 @@ wss.on("connection", function(ws) {
   		
   		switch (id) {
   			case "query":
-  				callQuery(data)
+  				retdata = callQuery(data)
   				break
   			default:
-  			
   		}
+  		ws.send("object::"+JSON.stringify(data));
+		console.log("sent");
   });
 
-  console.log("websocket connection open")
+  
 
-  ws.on("close", function() {
-    console.log("websocket connection close")
-  })
+	ws.on("close", function() {
+    	console.log("websocket connection close")
+	})
 })
-
-function sendData(data) {
-	wss.on('open', function(ws) {
-		ws.send("object::"+JSON.stringify(data));
-		console.log("sent");
-	});
-}
 
 // app.get('/', function(req, res) {
 // 	console.log("Got Request")
@@ -132,7 +127,7 @@ function callQuery(query) {
 						if (i==3 && flag) {
 							flag = false
 							console.log("pushing")
-							sendData(doAnalytics(commentTexts))
+							return doAnalytics(commentTexts))
 						}
 					}
 				})
