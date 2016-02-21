@@ -47,9 +47,14 @@ wss.on("connection", function(ws) {
 
   ws.on("close", function() {
     console.log("websocket connection close")
-    clearInterval(id)
   })
 })
+
+function sendData(data) {
+	wss.on('connection', function(ws) {
+		ws.send("object::"+JSON.stringify(data));
+	});
+}
 
 // app.get('/', function(req, res) {
 // 	console.log("Got Request")
@@ -163,7 +168,7 @@ function doAnalytics(arr) {
 	countObject.positive_count = positive_count
 	countObject.negative_count = negative_count
 	console.log(JSON.stringify(countObject))
-	ws.send("object::"+JSON.stringify(countObject));
+	sendData(countObject)
 }
 
 // app.listen(app.get('port'), function() {

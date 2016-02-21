@@ -2,6 +2,10 @@ $(document).ready(function() {
 	load();
 	
 	$("button#search").click(submitQuery);
+	$("button#search").keypress(function(e){
+		if(e.which === 13)
+			submitQuery();
+	});
 // 	socket.onmessage = function(result){
 // 		loadBoard(result);
 // 	};
@@ -12,7 +16,7 @@ var host = location.origin.replace(/^http/, 'ws')
 var ws = new WebSocket(host);
 ws.onmessage = function(event){
 	//loadBoard(event.data);
-	console.log(event.data)
+	console.log(event)
 };
 	
 
