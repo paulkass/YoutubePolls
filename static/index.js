@@ -171,7 +171,7 @@ function load() {
 }
 
 function submitQuery() {
-	if(("#inputTopic").val() == "")
+	if(("#inputTopic").val == "")
 		return;
 	query = $("#inputTopic").serializeArray();
 	$("#inputTopic").val("");
