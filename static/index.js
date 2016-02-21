@@ -36,6 +36,7 @@ $(document).ready(function() {
 			$("#error_view").show("fade")
 			$("#pollresults").hide()
 			$("#sample").html(JSON.stringify(obj.err_object))
+			return;
 		} else {
 			$("#pollresults").show("fade")
 			$("#error_view").hide()
