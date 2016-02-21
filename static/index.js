@@ -39,8 +39,8 @@ $(document).ready(function() {
 			$("canvas").css({
 				height: window.innerHeight*0.5
 			})
-			$("h3#overall").hmtl('Overall Results for ' +query)
-			$("h3#positive").hmtl('Positive Word Count for ' +query)
+			$("h3#overall").html('Overall Results for ' +query)
+			$("h3#positive").html('Positive Word Count for ' +query)
 			$("h3#positive").html('Negative Word Count for ' +query)
 
 			var ordered = []		
