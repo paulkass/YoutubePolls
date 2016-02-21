@@ -46,9 +46,9 @@ wss.on("connection", function(ws){
 		var retdata;
 		switch (id) {
 			case "query":
-				console.log("entering callQuery with" + data)
+				console.log("entering callQuery with " + data)
 				var comments = JSON.parse(JSON.stringify(callQuery(data)));
-				console.log("entering doAnalytics with" + comments)
+				console.log("entering doAnalytics with " + comments)
 				if(comments !== undefined)
 					retdata = JSON.parse(JSON.stringify(doAnalytics(comments)));
 				console.log("retdata: " +JSON.stringify(retdata));
