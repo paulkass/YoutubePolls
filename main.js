@@ -104,7 +104,6 @@ function callQuery(query) {
 //     res.send('Long url is'+response.longUrl);
 //   }
 // });
-	var comments = []
 	youtube.search.list({
     	part: 'snippet',
     	q: query,
@@ -118,6 +117,7 @@ function callQuery(query) {
     	}
     	else
     	{
+			var comments = []
 			for (var i=0; i <= response1.items.length; ++i)
 			{
 				console.log(i)
@@ -146,7 +146,7 @@ function callQuery(query) {
 							var text = response2.items[x].snippet.topLevelComment.snippet.textDisplay;
 							comments.push(text)
 						}
-					}		
+					}
 				})
 			}
 		}
