@@ -112,7 +112,6 @@ function callQuery(query) {
 				id_array.push(response.items[i].id.videoId);
 			}
 			var commentTexts = []
-			var flag = true
 			for (var i=0; i<id_array.length; i++) {
 				console.log(id_array[i])
 				youtube.commentThreads.list({
@@ -123,21 +122,19 @@ function callQuery(query) {
 					key: API_KEY
 				}, function(err, response) {
 					if (err) {
-						console.log("2"+JSON.stringify(err));
+						console.log("2"+JSON.stringify(err))
+						return
 					} else {
 						for (var x=0; x<response.items.length; x++) {
 							var text = response.items[x].snippet.topLevelComment.snippet.textDisplay;
 							//console.log(text)
 							commentTexts.push(text)
 						}
-						if (i==3 && flag) {
-							flag = false
-							console.log("pushing")
-							return doAnalytics(commentTexts)
-						}
 					}
 				})
 			}
+			console.log("pushing")
+			return doAnalytics(commentTexts)
 		}
 	})
 }
