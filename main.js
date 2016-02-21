@@ -32,8 +32,10 @@ var retdata
 //app.set('port', port);
 wss.on("connection", function(ws){
 	console.log("websocket server open")
-	ws.ping();
 	ws.on("open", function() {
+		setInterval(function() {
+        	ws.ping();
+    	}, 3000);
 		console.log("websocket connection open")
 	})
 	ws.on("message", function(data, flags) {
