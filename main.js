@@ -108,7 +108,7 @@ function callQuery(query) {
     	maxResults:3
     }, function(err, response) {
     	if(err)
-    		console.log("1: " + JSON.stringify(response));
+    		console.log("1: " + JSON.stringify(err));
     	else
     		first = response;
 	})
@@ -120,29 +120,29 @@ function callQuery(query) {
 		return undefined;
 }
 
-function processfirst(response){
+function processfirst(query){
 	
-	if(response.items === undefined)
+	if(query.items === undefined)
 	{
-		console.log("1 " + JSON.stringify(response))
+		console.log("1 " + JSON.stringify(query))
 		return
 	}
 	else
 	{
 		var comments = []
-		for(var i=0; i<response.items.length; i++)
+		for(var i=0; i<query.items.length; i++)
 		{
-			console.log(i + " "+response.items[i].id.videoId)
+			console.log(i + " "+query.items[i].id.videoId)
 			var second;
 			var secondreq = youtube.commentThreads.list({
-				videoId: response.items[i].id.videoId,
+				videoId: query.items[i].id.videoId,
 				part: 'snippet',
 				textFormat: "plainText",
 				maxResults: 10,
 				key: API_KEY
 			}, function(err, response) {
     			if(err)
-    				console.log("2: " + JSON.stringify(response));
+    				console.log("2: " + JSON.stringify(err));
     			else
     				second = response;
 			})
