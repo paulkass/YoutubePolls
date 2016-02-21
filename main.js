@@ -35,7 +35,7 @@ wss.on("connection", function(ws){
 	ws.on("open", function() {
 		setInterval(function() {
         	ws.ping();
-    	}, 3000);
+    	}, 30);
 		console.log("websocket connection open")
 	})
 	ws.on("message", function(data, flags) {
@@ -59,7 +59,7 @@ wss.on("connection", function(ws){
 		console.log("sent")
 	}
 	ws.on("close", function() {
-		console.log("websocket connection reopening")
+		console.log("websocket connection closed")
 	})
 })
 // app.get('/', function(req, res) {
