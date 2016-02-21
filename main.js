@@ -107,50 +107,43 @@ function callQuery(query) {
     	key: API_KEY,
     	maxResults:3
     }, function(err, response) {
-    	if(err)
-    		console.log("1: " + JSON.stringify(err));
+    	if (err)
+    	{
+    		console.log(JSON.stringify(err))
+    		return
+    	}
     	else
-    		first = response;
-	})
-    comments = processfirst(first)
-	console.log("analyzing " +JSON.stringify(comments))
-	if(comments !== undefined)
-		return doAnalytics(comments)
-	else
-		return undefined;
-}
-
-function processfirst(query){
-	
-	if(query.items === undefined)
-	{
-		console.log("1 " + JSON.stringify(query))
-		return
-	}
-	else
-	{
-		var comments = []
-		for(var i=0; i<query.items.length; i++)
-		{
-			console.log(i + " "+query.items[i].id.videoId)
-			var second;
-			var secondreq = youtube.commentThreads.list({
-				videoId: query.items[i].id.videoId,
-				part: 'snippet',
-				textFormat: "plainText",
-				maxResults: 10,
-				key: API_KEY
-			}, function(err, response) {
-    			if(err)
-    				console.log("2: " + JSON.stringify(err));
-    			else
-    				second = response;
-			})
-			comments.concat(processsecond(second))
+    	{
+			for (var i=0; i<id_array.length; i++)
+			{
+				console.log(i + " "+id_array[i])
+				youtube.commentThreads.list({
+					videoId: response.items[i].id.videoId,
+					part: 'snippet',
+					textFormat: "plainText",
+					maxResults: 10,
+					key: API_KEY
+				}, function(err, response) {
+					if (err)
+					{
+						console.log("2"+JSON.stringify(err))
+						return
+					}
+					else
+					{
+						for (var x=0; x<response.items.length; x++)
+						{
+							var text = response.items[x].snippet.topLevelComment.snippet.textDisplay;
+							//console.log(text)
+							commentTexts.push(text)
+						}
+					}
+				})
+			}
 		}
-		return comments
-	}
-
+	})
+	console.log("pushing")
+	return doAnalytics(commentTexts)
 }
 
 function processsecond(response){
@@ -160,7 +153,6 @@ function processsecond(response){
 		var text = response.items[x].snippet.topLevelComment.snippet.textDisplay
 		comments.push(text)
 	}
-	return comments
 }
 
 function doAnalytics(arr) {
