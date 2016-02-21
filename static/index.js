@@ -3,6 +3,8 @@ var ws = new WebSocket(host);
 $(document).ready(function() {
 	load();
 	
+	$("#pollresults").hide()
+	
 	$("button#search").click(submitQuery);
 	$("button#search").keypress(function(e){
 		if(e.which === 13)
@@ -11,13 +13,14 @@ $(document).ready(function() {
 	
 	ws = new WebSocket(host);
  	ws.onmessage = function(event){
+ 	$("#pollresults").show()
 		if(event.data === "")
 			return;
 		var data = event.data
 		var stub = data.split("::")[0]
 		var obj = JSON.parse(data.split("::")[1])
 		$("section#resultsHead").html('')
-		$("#chart").css({
+		$("canvas").css({
 			height: window.innerHeight*0.5
 		})
 		var ctx = document.getElementById("chart").getContext("2d");
@@ -62,6 +65,38 @@ $(document).ready(function() {
 		}
 
 		var chart = new Chart(ctx).Doughnut(chartData, chartOptions)
+		
+		var posCtx = document.getElementById("chart2").getContext("2d")
+		populateChart(posCtx, obj.positive_words, obj, "Positive Words")
+		
+		var negCtx = document.getElementById("chart3").getContext("2d")
+		populateChart(negCtx, obj.negative_words, obj, "Negative Words")
+		
+		function populateChart(context, labels, object, title) {
+			var curData = {
+				labels: labels,
+				datasets: [
+					{
+						label: title,
+            			fillColor: "#00CCFF",
+            			strokeColor: "rgba(220,220,220,0.8)",
+            			highlightFill: "rgba(220,220,220,0.75)",
+            			highlightStroke: "rgba(220,220,220,1)",
+            			data: []
+					}
+				]
+			}
+			var curOptions = {
+			
+			}
+			
+			for (var i=0; i<labels.length; i++) {
+				curData.datasets[0].data.push(object[labels[i]])
+			}
+			
+			var curChart = new Chart(context).Bar(curData, curOptions);
+		}
+		
 	};
 });
 
