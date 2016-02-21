@@ -1,6 +1,7 @@
 var host = location.origin.replace(/^http/, 'ws')
 var ws = new WebSocket(host);
 var current_charts = []
+var query;
 
 $(document).ready(function() {
 	load();
@@ -170,7 +171,7 @@ function load() {
 }
 
 function submitQuery() {
-	var query = $("input").serializeArray();
+	query = $("input").serializeArray();
 	$("input#inputTopic").val("");
 	ws.send("query::"+ query[0].value);
 	console.log("emitted" + query[0].value);
