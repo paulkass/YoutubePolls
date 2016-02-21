@@ -183,6 +183,8 @@ function doAnalytics(arr, callback) {
 	}
 	countObject.positive_count = positive_count
 	countObject.negative_count = negative_count
+	countObject.positive_words = positive_words
+	countObject.negative_words = negative_words
 	console.log(JSON.stringify(countObject))
 	callback(countObject)
 }

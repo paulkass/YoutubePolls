@@ -15,8 +15,8 @@ $(document).ready(function() {
 		var obj = JSON.parse(data.split("::")[1])
 		$("section#resultsHead").html('')
 		$("#chart").css({
-			height: window.innerHeight*0.3,
-			width: window.innerWidth*0.5
+			height: window.innerHeight*0.5,
+			width: window.innerWidth
 		})
 		var ctx = document.getElementById("chart").getContext("2d");
 		var chartData = [
@@ -34,8 +34,31 @@ $(document).ready(function() {
 			}
 		]
 		var chartOptions = {
-	
+   			 //Boolean - Whether we should show a stroke on each segment
+    		segmentShowStroke : true,
+
+    		//String - The colour of each segment stroke
+    		segmentStrokeColor : "#fff",
+
+    		//Number - The width of each segment stroke
+    		segmentStrokeWidth : 2,
+
+   		 	//Number - The percentage of the chart that we cut out of the middle
+    		percentageInnerCutout : 50, // This is 0 for Pie charts
+
+    		//Number - Amount of animation steps
+    		animationSteps : 100,
+
+    		//String - Animation easing effect
+    		animationEasing : "easeOutBounce",
+
+    		//Boolean - Whether we animate the rotation of the Doughnut
+    		animateRotate : true,
+
+    		//Boolean - Whether we animate scaling the Doughnut from the centre
+    		animateScale : false
 		}
+
 		var chart = new Chart(ctx).Doughnut(chartData, chartOptions)
 	};
 });
