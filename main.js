@@ -52,7 +52,8 @@ wss.on("connection", function(ws){
 		}
 		if(retdata !== undefined)
 		{
-			ws.send("object::"+JSON.stringify(retdata));
+			retdata.query = data;
+			ws.send(JSON.stringify(retdata));
 			console.log("sent");
 		}
 	})

@@ -8,9 +8,10 @@ $(document).ready(function() {
 		if(e.which === 13)
 			submitQuery();
 	});
- 	ws.onmessage = function(result){
+ 	ws.onmessage = function(event){
  		console.log(event);
-// 		loadBoard(result);
+ 		if(event.data !== "")
+	 		loadBoard(JSON.parse(event.data));
  	};
 
 });
@@ -30,19 +31,19 @@ function submitQuery() {
 }
 
 function loadBoard(result) {
-	if(result === null)
+	if(result === null || result === undefined)
 	{
 		$("section#resultsHead").html('<p class="col-sm-12">No Results</p>');
 	}
 	else
 	{
-		$("section#resultsHead").html('<p class="col-sm-12">' + result.length + " results found</p>");
+		$("section#resultsHead").html("<p class='col-sm-12'>Results Found</p>");
 		$("section#pollresults").html(
-			'<table class="col-sm-12"><thead><tr><th>Video Name</th><th>Postive Comments</th><th>Negative Comments</th></tr></thead><tbody id="results"></tbody></table>'
+			'<table class="col-sm-12"><thead><tr><th>Search QUery</th><th>Postive Comments</th><th>Negative Comments</th></tr></thead><tbody id="results"></tbody></table>'
 		);
 		var tabledata = "";
 		result.forEach(function(data){
-			tabledata += "<tr><td>" + data.name + "</td><td>" + data.positive + "</td><td>" + data.negative + "</td></tr>";
+			tabledata += "<tr><td>" + data.query + "</td><td>" + data.positive_count + "</td><td>" + data.negative_count + "</td></tr>";
 		});
 			
 		$("tbody#results").append(tableappend);
