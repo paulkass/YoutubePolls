@@ -37,7 +37,8 @@ $(document).ready(function() {
 	
 	}
 	var chart = new Chart(ctx).Doughnut(chartData, chartOptions)
-};
+	};
+});
 
 
 function load() {
