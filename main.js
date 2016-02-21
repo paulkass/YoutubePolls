@@ -9,7 +9,7 @@ var express = require('express')
 var google = require('googleapis')
 var OAuth2 = google.auth.OAuth2;
 //var youtube = require("youtube")
-var youtube = google.youtube({version: 'v3', auth: API_KEY})
+var youtube = google.youtube({version: 'v3', key: API_KEY})
 
 var app = express()
 
@@ -46,13 +46,28 @@ app.get('/oauth2callback', function(req, res) {
 });
 
 function callQuery(res) {
-	res.send("from_debugger:"+JSON.stringify(youtube))
-	// youtube.videos.getRating({
-//     			id: 'KRaWnd3LJfs',
-//     			auth: oauth2Client
-//     		}, function(response) {
-// 				res.send(JSON.stringify("hi::::::"+response))
-// 			})
+	// res.send("from_debugger:"+JSON.stringify(youtube))
+	// var params = { shortUrl: 'http://goo.gl/xKbRu3' };
+// 	youtube.url.get(params, function (err, response) {
+//   if (err) {
+//     res.send('Encountered error'+JSON.stringify(err));
+//   } else {
+//     res.send('Long url is'+response.longUrl);
+//   }
+// });
+	youtube.videos.list({
+    	part: 'snippet',
+    	maxResults: '3',
+    	order: 'viewCount',
+    	q: 'maroon 5 payphone',
+    	type: 'video'
+    }, function(err, response) {
+    	if (err) {
+    		res.send(JSON.stringify(err));
+    	} else {
+			res.send("hi::::::"+JSON.stringify(response))
+		}
+	})
 }
 
 app.listen(app.get('port'), function() {
