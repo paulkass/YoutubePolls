@@ -33,20 +33,26 @@ app.get('/oauth2callback', function(req, res) {
 	//res.sendfile("index.html")
 	oauth2Client.getToken(code, function(err, tokens) {
   		if(!err) {
+  			
     		oauth2Client.setCredentials(tokens);
     		console.log("OAuth Authentication Finished.")
     		//console.log(JSON.stringify(youtube.videos))
-    		youtube.videos.getRating({
-    			id: 'KRaWnd3LJfs',
-    			key: API_KEY
-    		}, function(response) {
-				res.send(JSON.stringify(response))
-			})
+    		callQuery()
   		} else {
   			console.log(JSON.stringify(err))
   		}
 	});
 });
+
+function callQuery() {
+	youtube.videos.getRating({
+    			id: 'KRaWnd3LJfs',
+    			key: API_KEY,
+    			auth: oauth2Client
+    		}, function(response) {
+				res.send(JSON.stringify("hi::::::"+response))
+			})
+}
 
 app.listen(app.get('port'), function() {
 
