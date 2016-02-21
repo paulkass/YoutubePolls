@@ -49,11 +49,11 @@ wss.on("connection", function(ws) {
 
   
 
-	ws.on("close", function() {
-    	console.log("websocket connection close")
-	})
 })
 
+wss.on("close", function() {
+	console.log("websocket connection close")
+})
 // app.get('/', function(req, res) {
 // 	console.log("Got Request")
 // 	//res.sendfile("index.html")
