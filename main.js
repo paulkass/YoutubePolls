@@ -37,8 +37,8 @@ app.get('/oauth2callback', function(req, res) {
     		youtube.search.list({
 				part: "snippet",
 				q: "holograms"
-			}, function(res) {
-				res.send(JSON.stringify(res))
+			}, function(response) {
+				res.send(JSON.stringify(response))
 			})
   		} else {
   			console.log(JSON.stringify(err))
