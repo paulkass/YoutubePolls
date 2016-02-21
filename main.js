@@ -27,15 +27,15 @@ var retdata
 //var oauth2Client = new OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URL)
 
 //app.set('port', port);
-ws.on("connection", function(wss){
-	wss.on("open", function() {
+wss.on("connection", function(ws){
+	ws.on("open", function() {
 		console.log("websocket connection open")
 	})
 	
-	wss.on("close", function() {
+	ws.on("close", function() {
 		console.log("websocket connection close")
 	})
-	wss.on("message", function(data, flags) {
+	ws.on("message", function(data, flags) {
 		var stuff = data.split("::")
 		var id = stuff[0]
 		var data = stuff[1]
@@ -47,7 +47,7 @@ ws.on("connection", function(wss){
 			default:
 				break
 		}
-		wss.send("object::"+JSON.stringify(retdata));
+		ws.send("object::"+JSON.stringify(retdata));
 		console.log("sent");
 	})
 })
