@@ -7,6 +7,7 @@ var API_KEY = 'AIzaSyB_7jlnUHlve5_SDeefIDspy2eCjoptF7Q'
 
 var express = require('express')
 var google = require('googleapis')
+var io = require('socket.io')(app)
 var OAuth2 = google.auth.OAuth2;
 //var youtube = require("youtube")
 var youtube = google.youtube({version: 'v3'})
@@ -16,6 +17,12 @@ var app = express()
 var oauth2Client = new OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URL)
 
 app.set('port', (process.env.PORT || 5000));
+
+io.on('connection', function(socket) {
+	socket.on('query', function(query) {
+		console.log("query received: "+query);
+	});
+})
 
 app.get('/', function(req, res) {
 	console.log("Got Request")
@@ -38,7 +45,7 @@ app.get('/oauth2callback', function(req, res) {
     		oauth2Client.setCredentials(tokens);
     		console.log("OAuth Authentication Finished.")
     		//console.log(JSON.stringify(youtube.videos))
-    		callQuery(res)
+    		//callQuery(res)
   		} else {
   			console.log(JSON.stringify(err))
   		}
