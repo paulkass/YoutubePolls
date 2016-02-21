@@ -127,7 +127,7 @@ function callQuery(query) {
 						if (i==3 && flag) {
 							flag = false
 							console.log("pushing")
-							return doAnalytics(commentTexts))
+							return doAnalytics(commentTexts)
 						}
 					}
 				})
