@@ -1,7 +1,6 @@
 var host = location.origin.replace(/^http/, 'ws')
 var ws = new WebSocket(host);
 var current_charts = []
-var query
 
 $(document).ready(function() {
 	load();
@@ -25,9 +24,13 @@ $(document).ready(function() {
 	ws = new WebSocket(host);
  	ws.onmessage = function(event){
  		$("#resultsHead").hide()
+		
 		var data = event.data
 		var stub = data.split("::")[0]
 		var obj = JSON.parse(data.split("::")[1])
+		
+		console.log(JSON.stringify(obj))
+		
 		if (obj.error) {
 			$("#error_view").show("fade")
 			$("#pollresults").hide()
@@ -62,7 +65,6 @@ $(document).ready(function() {
 			}
 			ordered.sort(function(a, b){return b.value - a.value;});
 		}
-
 		var ctx = document.getElementById("chart").getContext("2d");
 		clearContext(ctx, document.getElementById("chart"))
 		var chartData = [
@@ -155,6 +157,7 @@ $(document).ready(function() {
 			var curChart = new Chart(context).Bar(curData, curOptions);
 			current_charts.push(curChart)
 		}
+		}
 	};
 });
 function findOrderedValue(key, arr){
@@ -168,7 +171,7 @@ function load() {
 }
 
 function submitQuery() {
-	query = $("input").serializeArray();
+	var query = $("input").serializeArray();
 	$("input#inputTopic").val("");
 	ws.send("query::"+ query[0].value);
 	console.log("emitted" + query[0].value);
