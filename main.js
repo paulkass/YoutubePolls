@@ -36,7 +36,10 @@ wss.on("connection", function(ws) {
   		
   		switch (id) {
   			case "query":
-  				callQuery(data)
+  				callQuery(data, function(data) {
+  					console.log("In callback")
+  					ws.send("object::"+JSON.stringify(data))
+  				})
   				break
   			default:
   			
@@ -86,7 +89,7 @@ function sendData(data) {
 // // 	});
 // });
 
-function callQuery(query) {
+function callQuery(query, callback) {
 	// res.send("from_debugger:"+JSON.stringify(youtube))
 	// var params = { shortUrl: 'http://goo.gl/xKbRu3' };
 // 	youtube.url.get(params, function (err, response) {
@@ -111,10 +114,27 @@ function callQuery(query) {
 			}
 			var commentTexts = []
 			var flag = true
-			for (var i=0; i<id_array.length; i++) {
+			while (i<id_array.length) {
 				console.log(id_array[i])
+				
+			}
+			
+			function call(num) {
+				
+				if (num==id_array.length-1) {
+					doAnalytics(commentTexts, callback)
+				} else {
+					console.log(num)
+					console.log(JSON.stringify(id_array))
+					callYoutube(call, num+1)
+				}
+			}
+			
+			callYoutube(call, 0);
+			
+			function callYoutube(real_callback, num) {
 				youtube.commentThreads.list({
-					videoId: id_array[i],
+					videoId: id_array[num],
 					part: 'snippet',
 					textFormat: "plainText",
 					maxResults: 10,
@@ -128,11 +148,7 @@ function callQuery(query) {
 							//console.log(text)
 							commentTexts.push(text)
 						}
-						if (i==3 && flag) {
-							flag = false
-							console.log("pushing")
-							doAnalytics(commentTexts)
-						}
+						real_callback(num)
 					}
 				})
 			}
@@ -140,7 +156,7 @@ function callQuery(query) {
 	})
 }
 
-function doAnalytics(arr) {
+function doAnalytics(arr, callback) {
 	var positive_words = ["good", "great", "awesome", "amazing", "fantastic", "best", "love"]
 	var negative_words = ["suck", "boring", "idiot", "stupid", "appalling", "messed up", "hate"]
 	var countObject = {}
@@ -154,21 +170,24 @@ function doAnalytics(arr) {
 	var positive_count = 0
 	var negative_count = 0
 	for (var i=0; i<arr.length; i++) {
+		var blob = arr[i]
 		for (var x=0; x<positive_words.length; x++) {
-			if (arr[i].includes(positive_words[x]))
+			if (blob.indexOf(positive_words[x])>0) {
 				countObject[positive_words[x]] = countObject[positive_words[x]]+1
 				positive_count++
+			}
 		}
 		for (var x=0; x<negative_words.length; x++) {
-			if (arr[i].includes(negative_words[x]))
+			if (blob.indexOf(negative_words[x])>0) {
 				countObject[negative_words[x]] = countObject[negative_words[x]]+1
 				negative_count++
+			}
 		}
 	}
 	countObject.positive_count = positive_count
 	countObject.negative_count = negative_count
 	console.log(JSON.stringify(countObject))
-	sendData(countObject)
+	callback(countObject)
 }
 
 // app.listen(app.get('port'), function() {

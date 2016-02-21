@@ -16,7 +16,10 @@ var host = location.origin.replace(/^http/, 'ws')
 var ws = new WebSocket(host);
 ws.onmessage = function(event){
 	//loadBoard(event.data);
-	console.log(event)
+	var data = event.data
+	var stub = data.split("::")[0]
+	var obj = JSON.parse(data.split("::")[1])
+	console.log(obj.positive_count)
 };
 	
 
