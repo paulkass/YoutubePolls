@@ -123,24 +123,37 @@ function callQuery(query) {
 							//console.log(text)
 							commentTexts.push(text)
 						}
-						if (i==3) {
-							doAnalytics(commentTexts)
-						}
 					}
 				})
 			}
+			while(commentTexts.length==0) {}
+			doAnalytics(commentTexts)
 		}
 	})
 }
 
 function doAnalytics(arr) {
-	var positive_words = ["good", "great", "awesome", "amazing", "fantastic", "best"]
-	var negative_words = ["suck", "boring", "idiot", "stupid", "appalling", "messed up"]
+	var positive_words = ["good", "great", "awesome", "amazing", "fantastic", "best", "love"]
+	var negative_words = ["suck", "boring", "idiot", "stupid", "appalling", "messed up", "hate"]
 	var countObject = {}
-	console.log(JSON.stringify(arr))
-// 	for (var i=0; i<arr.length; i++) {
-// 		
-// 	}
+	//console.log(JSON.stringify(arr))
+	for (var i=0; i<positive_words.length; i++) {
+		countObject[positive_words[i]]=0
+	}
+	for (var i=0; i<negative_words.length; i++) {
+		countObject[negative_words[i]]=0
+	}
+	for (var i=0; i<arr.length; i++) {
+		for (var x=0; x<positive_words.length; x++) {
+			if (arr[i].includes(positive_words[x]))
+				countObject[positive_words[x]] = countObject[positive_words[x]]+1
+		}
+		for (var x=0; x<negative_words.length; x++) {
+			if (arr[i].includes(negative_words[x]))
+				countObject[negative_words[x]] = countObject[negative_words[x]]+1
+		}
+	}
+	console.log(JSON.stringify(countObject))
 }
 
 // app.listen(app.get('port'), function() {
