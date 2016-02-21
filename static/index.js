@@ -15,7 +15,7 @@ function submitQuery() {
   var query = $("input").serializeArray();
   $("input#inputTopic").val("");
   socket.emit('query', query[0].value);
-  console.log("emitted" + query[0].value);
+  alert("emitted" + query[0].value);
   $("section#resultsHead").html('<p class="col-sm-12">Obtaining Results...</p>');
 }
 

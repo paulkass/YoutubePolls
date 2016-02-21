@@ -15,6 +15,8 @@ var app = express()
 var server = require('http').Server(app)
 var io = require('socket.io')(server)
 
+app.use('/static', express.static(__dirname+"/static"))
+
 var oauth2Client = new OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URL)
 
 app.set('port', (process.env.PORT || 5000));
@@ -47,7 +49,7 @@ app.get('/oauth2callback', function(req, res) {
     		console.log("OAuth Authentication Finished.")
     		//console.log(JSON.stringify(youtube.videos))
     		//callQuery(res)
-    		res.sendfile('index.html')
+    		res.sendfile(__dirname+"/static/index.html")
   		} else {
   			console.log(JSON.stringify(err))
   		}
