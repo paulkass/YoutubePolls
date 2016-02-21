@@ -1,3 +1,5 @@
+var host = location.origin.replace(/^http/, 'ws')
+var ws = new WebSocket(host);
 $(document).ready(function() {
 	load();
 	
@@ -6,18 +8,13 @@ $(document).ready(function() {
 		if(e.which === 13)
 			submitQuery();
 	});
-// 	socket.onmessage = function(result){
+ 	ws.onmessage = function(result){
+ 		console.log(event);
 // 		loadBoard(result);
-// 	};
+ 	};
 
 });
 
-var host = location.origin.replace(/^http/, 'ws')
-var ws = new WebSocket(host);
-ws.onmessage = function(event){
-	//loadBoard(event.data);
-	console.log(event)
-};
 	
 
 function load() {
@@ -25,14 +22,12 @@ function load() {
 }
 
 function submitQuery() {
-  var query = $("input").serializeArray();
-  $("input#inputTopic").val("");
-  
-  ws.send("query::"+ query[0].value);
-  console.log("emitted" + query[0].value);
-  $("section#resultsHead").html('<p class="col-sm-12">Obtaining Results...</p>');
+	var query = $("input").serializeArray();
+	$("input#inputTopic").val("");
+	ws.send("query::"+ query[0].value);
+	console.log("emitted" + query[0].value);
+	$("section#resultsHead").html('<p class="col-sm-12">Obtaining Results...</p>');
 }
-
 
 function loadBoard(result) {
 	if(result === null)

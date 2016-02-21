@@ -36,6 +36,7 @@ wss.on("connection", function(ws){
 		console.log("websocket connection close")
 	})
 	ws.on("message", function(data, flags) {
+		console.log("begin")
 		var stuff = data.split("::")
 		var id = stuff[0]
 		var data = stuff[1]
@@ -47,8 +48,8 @@ wss.on("connection", function(ws){
 			default:
 				break
 		}
-		ws.send("object::"+JSON.stringify(retdata));
-		console.log("sent");
+		ws.send("object::"+JSON.stringify(retdata))
+		console.log("sent")
 	})
 })
 // app.get('/', function(req, res) {
