@@ -46,6 +46,7 @@ app.get('/oauth2callback', function(req, res) {
     		console.log("OAuth Authentication Finished.")
     		//console.log(JSON.stringify(youtube.videos))
     		//callQuery(res)
+    		res.sendfile('index.html')
   		} else {
   			console.log(JSON.stringify(err))
   		}
