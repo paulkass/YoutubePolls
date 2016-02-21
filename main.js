@@ -59,7 +59,6 @@ wss.on("connection", function(ws){
 		console.log("sent");
 	}
 	ws.on("close", function() {
-		clearInterval(interval);
 		console.log("websocket connection closed")
 	})
 })
