@@ -1,7 +1,7 @@
 $(document).ready(function() {
 	load();
-	socket = io('wss://youtubepolls.herokuapp.com/');
-	$("#search").click(submitQuery);
+	socket = io('https://youtubepolls.herokuapp.com/');
+	$("button#search").click(submitQuery);
 	socket.onmessage = function(result){
 		loadBoard(result);
 	};
@@ -12,9 +12,11 @@ function load() {
 }
 
 function submitQuery() {
-  var query = $("#inputtopic").serializeArray();
+  var query = $("input").serializeArray();
+  $("input#inputTopic").val("");
   socket.emit('query', query[0].value);
-  $("section#resultsHead").html("Obtaining Results...");
+  console.log("emitted" + query[0].value);
+  $("section#resultsHead").html('<p class="col-sm-12">Obtaining Results...</p>');
 }
 
 
