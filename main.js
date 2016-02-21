@@ -33,9 +33,9 @@ var retdata
 wss.on("connection", function(ws){
 	console.log("websocket server open")
 	ws.on("open", function() {
-		window.setInterval(function() {
+		setInterval(function() {
         	ws.ping();
-    	}, 30);
+    	}, 3000);
 		console.log("websocket connection open")
 	})
 	ws.on("message", function(data, flags) {
@@ -59,7 +59,7 @@ wss.on("connection", function(ws){
 		console.log("sent");
 	}
 	ws.on("close", function() {
-		window.clearInterval();
+		clearInterval();
 		console.log("websocket connection closed")
 	})
 })
