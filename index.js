@@ -1,27 +1,42 @@
 $(document).ready(function() {
 	load();
-	$("#search").click(loadBoard);
+	socket = new WebSocket('wss://youtubepolls.herokuapp.com/');
+	socket.onopen = function() {
+    console.log("socket open");
+	};
+	$("#search").click(submitQuery);
+	socket.onmessage = function(result){
+		loadBoard(result);
+	};
 });
 
 function load() {
 	$("section#intro").append("<p>Welcome to YoutubePolls!</p>");
 }
 
-function loadBoard() {
-	var fields = JSON.parse(localStorage.getItem('results'));
-	if(fields === null)
+function submitQuery() {
+  var query = $("#inputtopic").serializeArray();
+  socket.emit('query', query[0].value);
+  $("section#resultsHead").html("Obtaining Results...");
+}
+
+
+function loadBoard(result) {
+	if(result === null)
 	{
 		$("section#resultsHead").html('<p class="col-sm-12">No Results</p>');
 	}
 	else
 	{
-		$("section#resultsHead").html('<p class="col-sm-12">' + fields.length + " Results</p>");
+		$("section#resultsHead").html('<p class="col-sm-12">' + result.length + " results found</p>");
 		$("section#pollresults").html(
-			'<table class="col-sm-12"><thead><tr><th>Video Name</th><th>Video Rating</th><th>Comments</th></tr></thead><tbody id="results"></tbody></table>'
+			'<table class="col-sm-12"><thead><tr><th>Video Name</th><th>Postive Comments</th><th>Negative Comments</th></tr></thead><tbody id="results"></tbody></table>'
 		);
-		var tableappend = "";
-		for(var j = 0; j < fields.length; j++)
-			tableappend += "<tr><td>" + fields[j].name + "</td><td>" + fields[j].rating + "</td><td>" + "" + "</td></tr>";
+		var tabledata = "";
+		result.forEach(function(data){
+			tabledata += "<tr><td>" + data.name + "</td><td>" + data.positive + "</td><td>" + data.negative + "</td></tr>";
+		});
+			
 		$("tbody#results").append(tableappend);
 	}
 }
