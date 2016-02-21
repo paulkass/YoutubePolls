@@ -106,7 +106,7 @@ function callQuery(query) {
     	key: API_KEY,
     	maxResults:3
     }, first)
-	console.log("analyzing")
+	console.log("analyzing " +JSON.stringify(comments))
 	return doAnalytics(comments)
 }
 
@@ -131,6 +131,7 @@ function first(err, response){
 			}, second)
 		}
     }
+    console.log(JSON.stringify(comments))
 }
 
 function second(err, response){
