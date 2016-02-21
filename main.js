@@ -32,7 +32,9 @@ var retdata
 //app.set('port', port);
 wss.on("connection", function(ws){
 	console.log("websocket server open")
-	setInterval(ws.send(""),1000)
+	setInterval(function(){
+		ws.send("")
+	},10000)
 	ws.on("open", function() {
 		console.log("websocket connection open")
 	})
