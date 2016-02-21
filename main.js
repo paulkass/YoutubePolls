@@ -139,6 +139,7 @@ function callQuery(query) {
 							var text = response2.items[x].snippet.topLevelComment.snippet.textDisplay;
 							comments.push(text)
 						}
+						console.log(comments)
 					}
 				})
 			}
