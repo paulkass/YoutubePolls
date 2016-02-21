@@ -147,6 +147,7 @@ function second(err, response){
 			comments.push(text)
 		}
 	}
+	console.log(JSON.stringify(comments))
 }
 
 function doAnalytics(arr) {
