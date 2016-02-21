@@ -47,7 +47,10 @@ wss.on("connection", function(ws){
 		switch (id) {
 			case "query":
 				console.log("entering callQuery with" + data)
-				retdata = callQuery(data);
+				var comments = callQuery(data)
+				console.log("entering doAnalytics with" + comments)
+				if(comments !== undefined)
+					retdata = doAnalytics(comments)
 				console.log("retdata: " +JSON.stringify(retdata));
 				break;
 			default:
@@ -111,10 +114,7 @@ function callQuery(query) {
     	maxResults:3
     }, function(err, response1) {
     	if (err)
-    	{
     		console.log("1: "+JSON.stringify(err))
-    		return
-    	}
     	else
     	{
 			var comments = []
@@ -122,11 +122,7 @@ function callQuery(query) {
 			{
 				console.log(i)
 				if(i == response1.items.length)
-				{
-					console.log("pushing "+JSON.stringify(comments))
-					var result = doAnalytics(comments)
-					return result;				
-				}
+					return comments				
 				youtube.commentThreads.list({
 					videoId: response1.items[i].id.videoId,
 					part: 'snippet',
@@ -135,10 +131,7 @@ function callQuery(query) {
 					key: API_KEY
 				}, function(err, response2) {
 					if (err)
-					{
 						console.log("2: "+JSON.stringify(err))
-						return
-					}
 					else
 					{
 						for (var x=0; x<response2.items.length; ++x)
