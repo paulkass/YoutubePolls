@@ -32,7 +32,7 @@ var retdata
 //app.set('port', port);
 wss.on("connection", function(ws){
 	console.log("websocket server open")
-	ws.send("")
+	setInterval(ws.send(""),1000)
 	ws.on("open", function() {
 		console.log("websocket connection open")
 	})
@@ -101,6 +101,7 @@ function callQuery(query) {
 //     res.send('Long url is'+response.longUrl);
 //   }
 // });
+	var comments
 	youtube.search.list({
     	part: 'snippet',
     	q: query,
@@ -131,19 +132,19 @@ function callQuery(query) {
 					}
 					else
 					{
-						var comments = []
+						comments = []
 						for (var x=0; x<response2.items.length; ++x)
 						{
 							var text = response2.items[x].snippet.topLevelComment.snippet.textDisplay;
 							comments.push(text)
 						}
-						if(i == response1.items.length -1)
-						{
-							console.log("pushing")
-							return doAnalytics(comments)
-						}
-					}				
+					}		
 				})
+				if(i == response1.items.length -1)
+				{
+					console.log("pushing")
+					return doAnalytics(comments)					
+				}
 			}
 		}
 	})
