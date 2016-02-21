@@ -34,11 +34,9 @@ app.get('/oauth2callback', function(req, res) {
   		if(!err) {
     		oauth2Client.setCredentials(tokens);
     		console.log("OAuth Authentication Finished.")
-    		youtube.search.list({
-				part: "snippet",
-				q: "holograms",
-				auth: oauth2Client
-			}, function(response) {
+    		youtube.videos.getRating({
+    			id: 'KRaWnd3LJfs'
+    		}, function(response) {
 				res.send(JSON.stringify(response))
 			})
   		} else {
