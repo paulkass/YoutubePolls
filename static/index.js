@@ -2,6 +2,10 @@ $(document).ready(function() {
 	load();
 	
 	$("button#search").click(submitQuery);
+	$("button#search").keypress(function(e){
+		if(e.which === 13)
+			submitQuery();
+	});
 // 	socket.onmessage = function(result){
 // 		loadBoard(result);
 // 	};
