@@ -38,7 +38,7 @@ wss.on("connection", function(ws) {
   		switch (id) {
   			case "query":
   				retdata = callQuery(data)
-  				console.log("Finished pushing")
+  				console.log(JSON.stringify(retdata))
   				break
   			default:
   				break
