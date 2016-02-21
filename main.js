@@ -99,7 +99,6 @@ function callQuery(query) {
 //     res.send('Long url is'+response.longUrl);
 //   }
 // });
-	var comments
 	youtube.search.list({
     	part: 'snippet',
     	q: query,
