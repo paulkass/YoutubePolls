@@ -12,6 +12,8 @@ $(document).ready(function() {
 function websocketOpen() {
 	ws = new WebSocket(host);
  	ws.onmessage = function(event){
+		if(event.data === "")
+			return;
 		var data = event.data
 		var stub = data.split("::")[0]
 		var obj = JSON.parse(data.split("::")[1])
