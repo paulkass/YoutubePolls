@@ -99,46 +99,53 @@ function callQuery(query) {
 //     res.send('Long url is'+response.longUrl);
 //   }
 // });
+	var comments = []
 	youtube.search.list({
     	part: 'snippet',
     	q: query,
     	key: API_KEY,
     	maxResults:3
-    }, function(err, response) {
-    	if (err) {
-    		console.log(JSON.stringify(err))
-    		return
-    	} else {
-    		var id_array = []
-			for(var i=0; i<response.items.length; i++) {
-				id_array.push(response.items[i].id.videoId);
-			}
-			var commentTexts = []
-			for (var i=0; i<id_array.length; i++) {
-				console.log(i + " "+id_array[i])
-				youtube.commentThreads.list({
-					videoId: id_array[i],
-					part: 'snippet',
-					textFormat: "plainText",
-					maxResults: 10,
-					key: API_KEY
-				}, function(err, response) {
-					if (err) {
-						console.log("2"+JSON.stringify(err))
-						return
-					} else {
-						for (var x=0; x<response.items.length; x++) {
-							var text = response.items[x].snippet.topLevelComment.snippet.textDisplay;
-							//console.log(text)
-							commentTexts.push(text)
-						}
-					}
-				})
-			}
-			console.log("pushing")
-			return doAnalytics(commentTexts)
+    }, first)
+	console.log("analyzing")
+	return doAnalytics(comments)
+}
+
+function first(err, response){
+	if (err)
+	{
+    	console.log("1 " + JSON.stringify(err))
+    	return
+    }
+    else
+    {
+		for(var i=0; i<response.items.length; i++)
+		{
+			console.log(i + " "+response.items[i].id.videoId)
+			youtube.commentThreads.list({
+				videoId: response.items[i].id.videoId,
+				part: 'snippet',
+				textFormat: "plainText",
+				maxResults: 10,
+				key: API_KEY
+			}, second)
 		}
-	})
+    }
+}
+
+function second(err, response){
+	if (err)
+	{
+		console.log("2 " + JSON.stringify(err))
+		return
+	}
+	else
+	{
+		for (var x=0; x<response.items.length; x++)
+		{
+			var text = response.items[x].snippet.topLevelComment.snippet.textDisplay
+			comments.push(text)
+		}
+	}
 }
 
 function doAnalytics(arr) {
