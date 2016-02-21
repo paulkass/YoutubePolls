@@ -7,12 +7,12 @@ var API_KEY = 'AIzaSyB_7jlnUHlve5_SDeefIDspy2eCjoptF7Q'
 
 var express = require('express')
 var google = require('googleapis')
-var io = require('socket.io')(app)
 var OAuth2 = google.auth.OAuth2;
 //var youtube = require("youtube")
 var youtube = google.youtube({version: 'v3'})
 
 var app = express()
+var io = require('socket.io')(app)
 
 var oauth2Client = new OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URL)
 
