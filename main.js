@@ -99,7 +99,7 @@ function callQuery(query) {
 //     res.send('Long url is'+response.longUrl);
 //   }
 // });
-	var comments
+	var comments = []
 	youtube.search.list({
     	part: 'snippet',
     	q: query,
@@ -111,7 +111,6 @@ function callQuery(query) {
 }
 
 function first(err, response){
-	var comments
 	if (err)
 	{
     	console.log("1 " + JSON.stringify(err))
@@ -135,7 +134,6 @@ function first(err, response){
 }
 
 function second(err, response){
-	var comments = []
 	if (err)
 	{
 		console.log("2 " + JSON.stringify(err))
