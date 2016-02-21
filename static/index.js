@@ -1,4 +1,4 @@
-var host = location.origin.replace(/^http/, 'ws')
+var host = location.origin.replace(/^http/, 'wss')
 var ws = new WebSocket(host);
 $(document).ready(function() {
 	load();
@@ -8,6 +8,9 @@ $(document).ready(function() {
 		if(e.which === 13)
 			submitQuery();
 	});
+	
+function websocketOpen() {
+	ws = new WebSocket(host);
  	ws.onmessage = function(event){
 		var data = event.data
 		var stub = data.split("::")[0]
@@ -59,6 +62,13 @@ $(document).ready(function() {
 
 		var chart = new Chart(ctx).Doughnut(chartData, chartOptions)
 	};
+	
+	ws.on('close', function() {
+		console.log("Reopening Socket")
+		webSocketOpen()
+	});
+}
+webSocketOpen();
 });
 
 
