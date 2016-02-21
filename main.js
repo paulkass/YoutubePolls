@@ -76,7 +76,7 @@ function callQuery(res) {
 					videoId: id_array[i],
 					part: 'snippet',
 					textFormat: "plainText",
-					maxResults: 5,
+					maxResults: 10,
 					key: API_KEY
 				}, function(err, response) {
 					if (err) {
@@ -87,13 +87,20 @@ function callQuery(res) {
 							//console.log(text)
 							commentTexts.push(text)
 						}
-						console.log(JSON.stringify(commentTexts))
+						if (i==3) {
+							doAnalytics(commentTexts)
+						}
 					}
 				})
 			}
 			res.sendfile("index.html")
 		}
 	})
+}
+
+function doAnalytics(arr) {
+	var positive_words = ["good", "great", "awesome", "amazing", "fantastic", "best"]
+	var negative_words = ["suck", "boring", "idiot", "stupid", "appalling", "messed up"]
 }
 
 app.listen(app.get('port'), function() {
