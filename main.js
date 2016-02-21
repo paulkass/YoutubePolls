@@ -45,12 +45,13 @@ app.get('/oauth2callback', function(req, res) {
 });
 
 function callQuery(res) {
-	youtube.videos.getRating({
-    			id: 'KRaWnd3LJfs',
-    			auth: oauth2Client
-    		}, function(response) {
-				res.send(JSON.stringify("hi::::::"+response))
-			})
+	res.send(JSON.stringify(youtube.videos.getRating))
+	// youtube.videos.getRating({
+//     			id: 'KRaWnd3LJfs',
+//     			auth: oauth2Client
+//     		}, function(response) {
+// 				res.send(JSON.stringify("hi::::::"+response))
+// 			})
 }
 
 app.listen(app.get('port'), function() {
