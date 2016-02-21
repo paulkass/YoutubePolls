@@ -40,8 +40,7 @@ $(document).ready(function() {
 		for (var i = 0; i < obj.negative_words.length; i++) {
 			neg_words[i] = obj.negative_words[i]
 		}
-		delete obj.positive_words
-		delete obj.negative_words
+		
 		for(var prop in obj)
 		{
 			ordered.push({
