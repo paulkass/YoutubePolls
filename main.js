@@ -28,7 +28,7 @@ var retdata
 
 //app.set('port', port);
 
-wss.on("connection", function(ws) {
+wss.on("connection", function() {
   console.log("websocket connection open")
 })
 
@@ -49,7 +49,7 @@ wss.on("message", function(data, flags) {
 		default:
 			break
 	}
-	ws.send("object::"+JSON.stringify(retdata));
+	wss.send("object::"+JSON.stringify(retdata));
 	console.log("sent");
 })
 // app.get('/', function(req, res) {
