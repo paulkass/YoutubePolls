@@ -103,7 +103,6 @@ function callQuery(query) {
 //     res.send('Long url is'+response.longUrl);
 //   }
 // });
-	var comments
 	youtube.search.list({
     	part: 'snippet',
     	q: query,
@@ -117,9 +116,14 @@ function callQuery(query) {
     	}
     	else
     	{
-			for (var i=0; i < response1.items.length; ++i)
+			for (var i=0; i <= response1.items.length; ++i)
 			{
 				console.log(i)
+				if(i == response1.items.length)
+				{
+					console.log("pushing")
+					return doAnalytics(comments)					
+				}
 				youtube.commentThreads.list({
 					videoId: response1.items[i].id.videoId,
 					part: 'snippet',
@@ -142,11 +146,6 @@ function callQuery(query) {
 						}
 					}		
 				})
-				if(i == response1.items.length -1)
-				{
-					console.log("pushing")
-					return doAnalytics(comments)					
-				}
 			}
 		}
 	})
