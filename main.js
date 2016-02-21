@@ -118,11 +118,9 @@ function callQuery(query) {
     	else
     	{
 			var comments = []
-			for (var i=0; i <= response1.items.length; ++i)
+			for (var i=0; i < response1.items.length; ++i)
 			{
-				console.log(i)
-				if(i == response1.items.length)
-					return comments				
+				console.log(i)				
 				youtube.commentThreads.list({
 					videoId: response1.items[i].id.videoId,
 					part: 'snippet',
@@ -139,7 +137,8 @@ function callQuery(query) {
 							var text = response2.items[x].snippet.topLevelComment.snippet.textDisplay;
 							comments.push(text)
 						}
-						console.log(comments)
+						if(i == response1.items.length -1)
+							return comments
 					}
 				})
 			}
