@@ -1,9 +1,6 @@
 $(document).ready(function() {
 	load();
-	socket = new WebSocket('wss://youtubepolls.herokuapp.com/');
-	socket.onopen = function() {
-    console.log("socket open");
-	};
+	socket = io('wss://youtubepolls.herokuapp.com/');
 	$("#search").click(submitQuery);
 	socket.onmessage = function(result){
 		loadBoard(result);
