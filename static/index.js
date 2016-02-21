@@ -9,14 +9,13 @@ $(document).ready(function() {
 			submitQuery();
 	});
  	ws.onmessage = function(event){
- 		console.log(event);
- 		if(event.data !== "")
-	 		loadBoard(JSON.parse(event.data));
- 	};
-
+	//loadBoard(event.data);
+	var data = event.data
+	var stub = data.split("::")[0]
+	var obj = JSON.parse(data.split("::")[1])
+	console.log(obj.positive_count)
+	};
 });
-
-	
 
 function load() {
 	$("section#intro").append("<p>Welcome to YoutubePolls!</p>");
