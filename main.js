@@ -135,7 +135,6 @@ function callQuery(query) {
 						for (var x=0; x<response2.items.length; x++)
 						{
 							var text = response2.items[x].snippet.topLevelComment.snippet.textDisplay;
-							console.log("text:" + text)
 							comments.push(text)
 						}
 						if(i == response1.items.length -1)
@@ -154,7 +153,6 @@ function doAnalytics(arr) {
 	var positive_words = ["good", "great", "awesome", "amazing", "fantastic", "best", "love"]
 	var negative_words = ["suck", "boring", "idiot", "stupid", "appalling", "messed up", "hate"]
 	var countObject = {}
-	console.log("arr: " + JSON.stringify(arr))
 	for (var i=0; i<positive_words.length; i++) {
 		countObject[positive_words[i]]=0
 	}
