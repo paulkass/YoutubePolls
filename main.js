@@ -29,9 +29,20 @@ console.log("websocket server created")
 console.log("Port: "+app.get('port'))
 
 wss.on("connection", function(ws) {
-  var id = setInterval(function() {
-    ws.send(JSON.stringify(new Date()), function() {  })
-  }, 1000)
+  
+  ws.on("message", function(data, flags) {
+  		var stuff = data.split("::")
+  		var id = stuff[0]
+  		var data = stuff[1]
+  		
+  		switch (id) {
+  			case "query":
+  				callQuery(data)
+  				break
+  			default:
+  			
+  		}
+  });
 
   console.log("websocket connection open")
 
@@ -71,7 +82,7 @@ wss.on("connection", function(ws) {
 // // 	});
 // });
 
-function callQuery(res) {
+function callQuery(query) {
 	// res.send("from_debugger:"+JSON.stringify(youtube))
 	// var params = { shortUrl: 'http://goo.gl/xKbRu3' };
 // 	youtube.url.get(params, function (err, response) {
@@ -83,12 +94,12 @@ function callQuery(res) {
 // });
 	youtube.search.list({
     	part: 'snippet',
-    	q: 'maroon 5 payphone',
+    	q: query,
     	key: API_KEY,
     	maxResults:3
     }, function(err, response) {
     	if (err) {
-    		res.send(JSON.stringify(err));
+    		console.log(JSON.stringify(err));
     	} else {
     		var id_array = [];
 			for(var i=0; i<response.items.length; i++) {
@@ -105,7 +116,7 @@ function callQuery(res) {
 					key: API_KEY
 				}, function(err, response) {
 					if (err) {
-						res.send("2"+JSON.stringify(err));
+						console.log("2"+JSON.stringify(err));
 					} else {
 						for (var x=0; x<response.items.length; x++) {
 							var text = response.items[x].snippet.topLevelComment.snippet.textDisplay;
@@ -118,7 +129,6 @@ function callQuery(res) {
 					}
 				})
 			}
-			res.sendfile("index.html")
 		}
 	})
 }
@@ -126,6 +136,11 @@ function callQuery(res) {
 function doAnalytics(arr) {
 	var positive_words = ["good", "great", "awesome", "amazing", "fantastic", "best"]
 	var negative_words = ["suck", "boring", "idiot", "stupid", "appalling", "messed up"]
+	var countObject = {}
+	console.log(JSON.stringify(arr))
+// 	for (var i=0; i<arr.length; i++) {
+// 		
+// 	}
 }
 
 // app.listen(app.get('port'), function() {

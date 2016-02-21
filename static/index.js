@@ -10,9 +10,9 @@ $(document).ready(function() {
 
 var host = location.origin.replace(/^http/, 'ws')
 var ws = new WebSocket(host);
-ws.onmessage = function (event) {
-    
-}
+ws.onmessage = function(event){
+	//loadBoard(event.data);
+};
 	
 
 function load() {
@@ -23,7 +23,7 @@ function submitQuery() {
   var query = $("input").serializeArray();
   $("input#inputTopic").val("");
   
-  //socket.emit('query', query[0].value);
+  ws.send("query::"+ query[0].value);
   console.log("emitted" + query[0].value);
   $("section#resultsHead").html('<p class="col-sm-12">Obtaining Results...</p>');
 }
