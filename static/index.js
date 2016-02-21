@@ -1,6 +1,7 @@
 var host = location.origin.replace(/^http/, 'ws')
 var ws = new WebSocket(host);
 var current_charts = []
+var query
 
 $(document).ready(function() {
 	load();
@@ -29,28 +30,6 @@ $(document).ready(function() {
 		var data = event.data
 		var stub = data.split("::")[0]
 		var obj = JSON.parse(data.split("::")[1])
-		
-		var ordered = []		
-		var pos_words = []
-		var neg_words = []
-		var total_comments = obj.total_comments
-		for (var i = 0; i < obj.positive_words.length; i++) {
-			pos_words[i] = obj.positive_words[i]
-		}
-		for (var i = 0; i < obj.negative_words.length; i++) {
-			neg_words[i] = obj.negative_words[i]
-		}
-		
-		for(var prop in obj)
-		{
-			ordered.push({
-			key: prop,
-			value: obj[prop]
-			})
-		}
-		ordered.sort(function(a, b){return b.value - a.value;});
-
-
 		if (obj.error) {
 			$("#error_view").show("fade")
 			$("#pollresults").hide()
@@ -62,7 +41,30 @@ $(document).ready(function() {
 			$("canvas").css({
 				height: window.innerHeight*0.5
 			})
+			$("h3#overall").hmtl('Overall Results for ' +query)
+			$("h3#positive").hmtl('Positive Word Count for ' +query)
+			$("h3#positive").html('Negative Word Count for ' +query)
+
+			var ordered = []		
+			var pos_words = []
+			var neg_words = []
+			var total_comments = obj.total_comments
+			for (var i = 0; i < obj.positive_words.length; i++) {
+				pos_words[i] = obj.positive_words[i]
+			}
+			for (var i = 0; i < obj.negative_words.length; i++) {
+				neg_words[i] = obj.negative_words[i]
+			}
+			for(var prop in obj)
+			{
+				ordered.push({
+				key: prop,
+				value: obj[prop]
+				})
+			}
+			ordered.sort(function(a, b){return b.value - a.value;});
 		}
+
 		var ctx = document.getElementById("chart").getContext("2d");
 		clearContext(ctx, document.getElementById("chart"))
 		var chartData = [
@@ -168,7 +170,7 @@ function load() {
 }
 
 function submitQuery() {
-	var query = $("input").serializeArray();
+	query = $("input").serializeArray();
 	$("input#inputTopic").val("");
 	ws.send("query::"+ query[0].value);
 	console.log("emitted" + query[0].value);
