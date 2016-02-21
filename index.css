@@ -1,20 +1,21 @@
 section
 {
-	border: 1px solid black;
 	margin: 16px;
 }
-section#intro
+section#intro, section#resultsHead
 {
 	text-align: center;
 	font-size: 48px;
 }
-section#login
+section#search
 {
 	text-align: left;
 	font-size: 16px;
 }
 button
 {
+	margin-top: 8px;
+	margin-bottom: 8px;
 	background-color: grey;
 	border: 2px solid grey;
 }
