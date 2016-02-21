@@ -38,7 +38,7 @@ wss.on("connection", function(ws) {
   		switch (id) {
   			case "query":
   				retdata = callQuery(data)
-  				console.log(JSON.stringify(retdata))
+  				console.log("retdata: " +JSON.stringify(retdata))
   				break
   			default:
   				break
@@ -165,6 +165,6 @@ function doAnalytics(arr) {
 	}
 	countObject.positive_count = positive_count
 	countObject.negative_count = negative_count
-	console.log(JSON.stringify(countObject))
+	console.log("countObject: " + JSON.stringify(countObject))
 	return countObject
 }
