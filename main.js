@@ -124,7 +124,8 @@ function callQuery(query) {
 				if(i == response1.items.length)
 				{
 					console.log("pushing")
-					return doAnalytics(comments)					
+					var result = doAnalytics(comments)
+					return result;				
 				}
 				youtube.commentThreads.list({
 					videoId: response1.items[i].id.videoId,
