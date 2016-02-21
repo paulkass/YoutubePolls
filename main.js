@@ -100,15 +100,22 @@ function callQuery(query) {
 //   }
 // });
 	var comments = []
-	var first = youtube.search.list({
+	var firstreq = youtube.search.list({
     	part: 'snippet',
     	q: query,
     	key: API_KEY,
     	maxResults:3
     })
+    var first;
+    firstreq.execute(function(response) {
+    	first = response;
+	})
     comments = processfirst(first)
 	console.log("analyzing " +JSON.stringify(comments))
-	return doAnalytics(comments)
+	if(comments !== undefined)
+		return doAnalytics(comments)
+	else
+		return undefined;
 }
 
 function processfirst(response){
@@ -123,13 +130,17 @@ function processfirst(response){
 		var comments = []
 		for(var i=0; i<response.items.length; i++)
 		{
+			var second;
 			console.log(i + " "+response.items[i].id.videoId)
-			var second = youtube.commentThreads.list({
+			var secondreq = youtube.commentThreads.list({
 				videoId: response.items[i].id.videoId,
 				part: 'snippet',
 				textFormat: "plainText",
 				maxResults: 10,
 				key: API_KEY
+			})
+			secondreq.execute(function(response) {
+    			second = response;
 			})
 			comments.concat(processsecond(second))
 		}
