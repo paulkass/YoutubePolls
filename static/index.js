@@ -1,4 +1,4 @@
-var host = location.origin.replace(/^http/, 'wss')
+var host = location.origin.replace(/^http/, 'ws')
 var ws = new WebSocket(host);
 $(document).ready(function() {
 	load();
