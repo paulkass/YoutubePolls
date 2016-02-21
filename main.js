@@ -106,6 +106,7 @@ function callQuery(query, callback) {
     }, function(err, response) {
     	if (err) {
     		console.log(JSON.stringify(err));
+    		bailOut(callback, err)
     	} else {
     		var id_array = [];
 			for(var i=0; i<response.items.length; i++) {
@@ -139,6 +140,7 @@ function callQuery(query, callback) {
 				}, function(err, response) {
 					if (err) {
 						console.log("2"+JSON.stringify(err));
+						bailOut(callback, err)
 					} else {
 						for (var x=0; x<response.items.length; x++) {
 							var text = response.items[x].snippet.topLevelComment.snippet.textDisplay;
@@ -151,6 +153,14 @@ function callQuery(query, callback) {
 			}
 		}
 	})
+}
+
+function bailOut(callback, error) {
+	var err = {
+		error: true,
+		err_object: error
+	}
+	callback(err)
 }
 
 function doAnalytics(arr, callback) {
@@ -186,5 +196,6 @@ function doAnalytics(arr, callback) {
 	countObject.positive_words = positive_words
 	countObject.negative_words = negative_words
 	countObject.total_comments = arr.length
+	countObject.err = false
 	callback(countObject)
 }
