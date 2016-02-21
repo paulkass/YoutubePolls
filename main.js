@@ -20,9 +20,9 @@ var server = http.createServer(app)
 server.listen(port)
 
 var WebSocket = require("ws")
-//var ws = new WebSocket('ws://youtubepolls.herokuapp.com/')
-//var WebSocketServer = require("ws").Server
-//var wss = new WebSocketServer({server: server})
+var ws = new WebSocket('wss://youtubepolls.herokuapp.com/')
+var WebSocketServer = require("ws").Server
+var wss = new WebSocketServer({server: server})
 console.log("websocket server created")
 
 
@@ -54,6 +54,8 @@ wss.on("connection", function(ws) {
   })
 })
 }
+
+setUpSocket()
 
 // app.get('/', function(req, res) {
 // 	console.log("Got Request")
