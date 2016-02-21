@@ -45,7 +45,7 @@ app.get('/oauth2callback', function(req, res) {
 });
 
 function callQuery(res) {
-	res.send(JSON.stringify(youtube))
+	res.send(JSON.stringify(oauth2Client))
 	// youtube.videos.getRating({
 //     			id: 'KRaWnd3LJfs',
 //     			auth: oauth2Client
