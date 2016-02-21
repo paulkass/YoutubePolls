@@ -132,7 +132,7 @@ function callQuery(query) {
 						if (i==3 && flag) {
 							flag = false
 							console.log("pushing")
-							doAnalytics(commentTexts)
+							sendData(doAnalytics(commentTexts))
 						}
 					}
 				})
@@ -169,9 +169,5 @@ function doAnalytics(arr) {
 	countObject.positive_count = positive_count
 	countObject.negative_count = negative_count
 	console.log(JSON.stringify(countObject))
-	sendData(countObject)
+	return countObject
 }
-
-// app.listen(app.get('port'), function() {
-// 
-// });
