@@ -28,7 +28,7 @@ var retdata
 
 //app.set('port', port);
 
-wss.on("connection", function() {
+wss.on("open", function() {
   console.log("websocket connection open")
 })
 
