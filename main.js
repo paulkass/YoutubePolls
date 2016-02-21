@@ -64,7 +64,22 @@ function callQuery(res) {
     	if (err) {
     		res.send(JSON.stringify(err));
     	} else {
-			res.send("hi::::::"+JSON.stringify(response))
+    		var id_array = [];
+			for(var i=0; i<response.items.length; i++) {
+				id_array.push(response.items[i].id.videoId);
+			}
+			youtube.videos.list({
+				id: id_array.join(","),
+				part: 'statistics',
+				key: API_KEY,
+				auth: oauth2Client
+			}, function(err2, response2) {
+				if (err) {
+					res.send("2:"+JSON.stringify(err2));
+				} else {
+					res.send(JSON.stringify(response2))
+				}
+			})
 		}
 	})
 }
