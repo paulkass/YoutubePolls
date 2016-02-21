@@ -114,9 +114,9 @@ function callQuery(query) {
     	}
     	else
     	{
-			for (var i=0; i<id_array.length; i++)
+			for (var i=0; i<response.items.length; i++)
 			{
-				console.log(i + " "+id_array[i])
+				console.log(i)
 				youtube.commentThreads.list({
 					videoId: response.items[i].id.videoId,
 					part: 'snippet',
