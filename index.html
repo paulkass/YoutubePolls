@@ -4,6 +4,7 @@
 		<title>Youtube Polls</title>
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"/>
+		<script src="names.json"></script>
 		<script src="index.js"></script>
 		<link rel="stylesheet" type="text/css" href="index.css">
 	</head>
@@ -26,10 +27,24 @@
 				<div class="col-sm-offset-3 col-sm-2">
 					<button><a href="">Sign in to Google</a></button>
 				</div>
-				<div class="col-sm-offset-7 col-sm-2">
+				<div class="col-sm-offset-2 col-sm-4">
 				    <button><a href="">Sign up for a Google Account</a></button>
 			    </div>
 			</form>
+		</section>
+		<section id="pollresults">
+			<table class="col-sm-12">
+				<thead>
+					<tr>
+						<th>Video Name</th>
+						<th>Video Rating</th>
+						<th>Comments</th>
+					</tr>
+				</thead>
+				<tbody id="results">
+					
+				</tbody>	
+			</table>
 		</section>
 	</body>
 </html>
