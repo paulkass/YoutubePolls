@@ -45,7 +45,7 @@ $(document).ready(function() {
 			})
 			$("h3#overall").html('Overall Results for ' +query[0].value)
 			$("h3#positive").html('Positive Word Count for ' +query[0].value)
-			$("h3#positive").html('Negative Word Count for ' +query[0].value)
+			$("h3#negative").html('Negative Word Count for ' +query[0].value)
 
 			var ordered = []		
 			var pos_words = []
@@ -171,8 +171,10 @@ function load() {
 }
 
 function submitQuery() {
-	query = $("input").serializeArray();
-	$("input#inputTopic").val("");
+	if(("#inputTopic").val() == "")
+		return;
+	query = $("#inputTopic").serializeArray();
+	$("#inputTopic").val("");
 	ws.send("query::"+ query[0].value);
 	console.log("emitted" + query[0].value);
 	//$("section#resultsHead").html('<p class="col-sm-12">Obtaining Results...</p>');
