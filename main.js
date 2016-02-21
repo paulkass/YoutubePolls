@@ -30,43 +30,32 @@ console.log("websocket server created")
 //var oauth2Client = new OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URL)
 
 //app.set('port', port);
-wss.on("connection", function(ws){
-	console.log("websocket server open")
+wss.on("connection", function(ws) {
+ 	console.log("websocket connection open")
 	setInterval(function(){
 		ws.send("")
-	},10000)
-	ws.on("open", function() {
-		console.log("websocket connection open")
-	})
+	},10000) 
 	ws.on("message", function(data, flags) {
-		console.log("begin")
-		var stuff = data.split("::")
-		var id = stuff[0]
-		var data = stuff[1]
-		var retdata;
-		switch (id) {
-			case "query":
-				console.log("entering callQuery with " + data)
-				var comments = JSON.parse(JSON.stringify(callQuery(data)))
-				console.log("entering doAnalytics with " + comments)
-				if(comments !== undefined)
-					retdata = JSON.parse(JSON.stringify(doAnalytics(comments)))
-				console.log("retdata: " +JSON.stringify(retdata));
-				break;
-			default:
-				break;
-		}
-		if(retdata !== undefined)
-		{
-			retdata.query = data;
-			ws.send(JSON.stringify(retdata))
-			console.log("sent")
-		}
-	})
-	ws.on("close", function() {
-		console.log("websocket connection closed")
-	})
+  		var stuff = data.split("::")
+  		var id = stuff[0]
+  		var data = stuff[1]
+  		
+  		switch (id) {
+  			case "query":
+  				callQuery(data, function(data) {
+  					console.log("In callback")
+  					ws.send("object::"+JSON.stringify(data))
+  				})
+  				break
+  			default:
+  			
+  		}
+  });
+  ws.on("close", function() {
+    console.log("websocket connection close")
+  })
 })
+
 // app.get('/', function(req, res) {
 // 	console.log("Got Request")
 // 	//res.sendfile("index.html")
@@ -97,7 +86,7 @@ wss.on("connection", function(ws){
 // // 	});
 // });
 
-function callQuery(query) {
+function callQuery(query, callback) {
 	// res.send("from_debugger:"+JSON.stringify(youtube))
 	// var params = { shortUrl: 'http://goo.gl/xKbRu3' };
 // 	youtube.url.get(params, function (err, response) {
@@ -112,33 +101,51 @@ function callQuery(query) {
     	q: query,
     	key: API_KEY,
     	maxResults:3
-    }, function(err, response1) {
-    	if (err)
-    		console.log("1: "+JSON.stringify(err))
-    	else
-    	{
-			var comments = []
-			for (var i=0; i < response1.items.length; ++i)
-			{
-				console.log(i)				
+    }, function(err, response) {
+    	if (err) {
+    		console.log(JSON.stringify(err));
+    	} else {
+    		var id_array = [];
+			for(var i=0; i<response.items.length; i++) {
+				id_array.push(response.items[i].id.videoId);
+			}
+			var commentTexts = []
+			var flag = true
+			while (i<id_array.length) {
+				console.log(id_array[i])
+				
+			}
+			
+			function call(num) {
+				
+				if (num==id_array.length-1) {
+					doAnalytics(commentTexts, callback)
+				} else {
+					console.log(num)
+					console.log(JSON.stringify(id_array))
+					callYoutube(call, num+1)
+				}
+			}
+			
+			callYoutube(call, 0);
+			
+			function callYoutube(real_callback, num) {
 				youtube.commentThreads.list({
-					videoId: response1.items[i].id.videoId,
+					videoId: id_array[num],
 					part: 'snippet',
 					textFormat: "plainText",
 					maxResults: 10,
 					key: API_KEY
-				}, function(err, response2) {
-					if (err)
-						console.log("2: "+JSON.stringify(err))
-					else
-					{
-						for (var x=0; x<response2.items.length; ++x)
-						{
-							var text = response2.items[x].snippet.topLevelComment.snippet.textDisplay;
-							comments.push(text)
+				}, function(err, response) {
+					if (err) {
+						console.log("2"+JSON.stringify(err));
+					} else {
+						for (var x=0; x<response.items.length; x++) {
+							var text = response.items[x].snippet.topLevelComment.snippet.textDisplay;
+							//console.log(text)
+							commentTexts.push(text)
 						}
-						if(i == response1.items.length -1)
-							return comments
+						real_callback(num)
 					}
 				})
 			}
@@ -146,10 +153,11 @@ function callQuery(query) {
 	})
 }
 
-function doAnalytics(arr) {
+function doAnalytics(arr, callback) {
 	var positive_words = ["good", "great", "awesome", "amazing", "fantastic", "best", "love"]
 	var negative_words = ["suck", "boring", "idiot", "stupid", "appalling", "messed up", "hate"]
 	var countObject = {}
+	//console.log(JSON.stringify(arr))
 	for (var i=0; i<positive_words.length; i++) {
 		countObject[positive_words[i]]=0
 	}
@@ -159,19 +167,22 @@ function doAnalytics(arr) {
 	var positive_count = 0
 	var negative_count = 0
 	for (var i=0; i<arr.length; i++) {
+		var blob = arr[i]
 		for (var x=0; x<positive_words.length; x++) {
-			if (arr[i].includes(positive_words[x]))
-				countObject[positive_words[x]]++
+			if (blob.indexOf(positive_words[x])>0) {
+				countObject[positive_words[x]] = countObject[positive_words[x]]+1
 				positive_count++
+			}
 		}
 		for (var x=0; x<negative_words.length; x++) {
-			if (arr[i].includes(negative_words[x]))
-				countObject[negative_words[x]]++
+			if (blob.indexOf(negative_words[x])>0) {
+				countObject[negative_words[x]] = countObject[negative_words[x]]+1
 				negative_count++
+			}
 		}
 	}
 	countObject.positive_count = positive_count
 	countObject.negative_count = negative_count
-	console.log("countObject: " + JSON.stringify(countObject))
-	return countObject
+	console.log(JSON.stringify(countObject))
+	callback(countObject)
 }
