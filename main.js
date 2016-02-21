@@ -113,7 +113,7 @@ function callQuery(query) {
 
 function processfirst(response){
 	
-	if(response.items[0] === undefined)
+	if(response.items === undefined)
 	{
 		console.log("1 " + JSON.stringify(response))
 		return
@@ -139,7 +139,7 @@ function processfirst(response){
 }
 
 function processsecond(response){
-	if(response.items[0] === undefined)
+	if(response.items === undefined)
 	{
 		console.log("1 " + JSON.stringify(response))
 		return
