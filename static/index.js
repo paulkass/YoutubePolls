@@ -1,5 +1,7 @@
 var host = location.origin.replace(/^http/, 'ws')
 var ws = new WebSocket(host);
+var current_charts = []
+
 $(document).ready(function() {
 	load();
 	
@@ -106,6 +108,7 @@ $(document).ready(function() {
 		ordered.splice(0,2);
 
 		var chart = new Chart(ctx).Doughnut(chartData, chartOptions)
+		current_charts.push(chart)
 		$("#total_comments").html("<h4>Total Comments: "+total_comments+"</h4>")
 
 		var posCtx = document.getElementById("chart2").getContext("2d")
@@ -151,6 +154,7 @@ $(document).ready(function() {
 			}
 			
 			var curChart = new Chart(context).Bar(curData, curOptions);
+			current_charts.push(curChart)
 		}
 	};
 });
@@ -170,6 +174,9 @@ function submitQuery() {
 	ws.send("query::"+ query[0].value);
 	console.log("emitted" + query[0].value);
 	//$("section#resultsHead").html('<p class="col-sm-12">Obtaining Results...</p>');
-	$("#resultsHead").show("fade")
+	for (var i=0; i<current_charts.length; i++) {
+		current_charts[i].destroy()
+	}
+	current_charts = []
 	
 }

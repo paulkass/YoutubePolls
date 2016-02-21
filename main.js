@@ -5,6 +5,9 @@ var CLIENT_SECRET = 'y5qJVqIbihHKntf6NbV6yzon'
 var REDIRECT_URL = 'http://youtubepolls.herokuapp.com/oauth2callback'
 var API_KEY = 'AIzaSyB_7jlnUHlve5_SDeefIDspy2eCjoptF7Q'
 
+var VIDEO_COUNT = 3
+var COMMENT_COUNT = 50
+
 var express = require('express')
 var google = require('googleapis')
 var http = require('http')
@@ -102,7 +105,7 @@ function callQuery(query, callback) {
     	part: 'snippet',
     	q: query,
     	key: API_KEY,
-    	maxResults:3
+    	maxResults:VIDEO_COUNT
     }, function(err, response) {
     	if (err) {
     		console.log(JSON.stringify(err));
@@ -135,7 +138,7 @@ function callQuery(query, callback) {
 					videoId: id_array[num],
 					part: 'snippet',
 					textFormat: "plainText",
-					maxResults: 10,
+					maxResults: COMMENT_COUNT,
 					key: API_KEY
 				}, function(err, response) {
 					if (err) {
