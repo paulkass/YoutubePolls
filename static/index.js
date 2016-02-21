@@ -157,8 +157,7 @@ $(document).ready(function() {
 			var curChart = new Chart(context).Bar(curData, curOptions);
 			current_charts.push(curChart)
 		}
-		}
-	};
+	}
 });
 function findOrderedValue(key, arr){
 	for (var i = 0; i < arr.length; i++)
