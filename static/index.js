@@ -31,6 +31,19 @@ $(document).ready(function() {
 		
 		console.log(JSON.stringify(obj))
 		
+		if (obj.error) {
+			$("#error_view").show("fade")
+			$("#pollresults").hide()
+			$("#sample").html(JSON.stringify(obj.err_object))
+		} else {
+			$("#pollresults").show("fade")
+			$("#error_view").hide()
+			$("section#resultsHead").html('')
+			$("canvas").css({
+				height: window.innerHeight*0.5
+			})
+		
+		
 		var ordered = []		
 		var pos_words = []
 		var neg_words = []
@@ -52,18 +65,7 @@ $(document).ready(function() {
 		ordered.sort(function(a, b){return b.value - a.value;});
 
 
-		if (obj.error) {
-			$("#error_view").show("fade")
-			$("#pollresults").hide()
-			$("#sample").html(JSON.stringify(obj.err_object))
-		} else {
-			$("#pollresults").show("fade")
-			$("#error_view").hide()
-			$("section#resultsHead").html('')
-			$("canvas").css({
-				height: window.innerHeight*0.5
-			})
-		}
+		
 		var ctx = document.getElementById("chart").getContext("2d");
 		clearContext(ctx, document.getElementById("chart"))
 		var chartData = [
@@ -155,6 +157,7 @@ $(document).ready(function() {
 			
 			var curChart = new Chart(context).Bar(curData, curOptions);
 			current_charts.push(curChart)
+		}
 		}
 	};
 });
