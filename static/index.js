@@ -39,12 +39,12 @@ function loadBoard(result) {
 	{
 		$("section#resultsHead").html("<p class='col-sm-12'>Results Found</p>");
 		$("section#pollresults").html(
-			'<table class="col-sm-12"><thead><tr><th>Search QUery</th><th>Postive Comments</th><th>Negative Comments</th></tr></thead><tbody id="results"></tbody></table>'
+			'<table class="col-sm-12"><thead><tr><th>Search Query</th><th>Postive Comments</th><th>Negative Comments</th></tr></thead><tbody id="results"></tbody></table>'
 		);
 		var tabledata = "";
-		result.forEach(function(data){
-			tabledata += "<tr><td>" + data.query + "</td><td>" + data.positive_count + "</td><td>" + data.negative_count + "</td></tr>";
-		});
+//		result.forEach(function(data){
+			tabledata += "<tr><td>" + result.query + "</td><td>" + result.positive_count + "</td><td>" + result.negative_count + "</td></tr>";
+//		});
 			
 		$("tbody#results").append(tableappend);
 	}

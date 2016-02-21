@@ -173,12 +173,12 @@ function doAnalytics(arr) {
 	for (var i=0; i<arr.length; i++) {
 		for (var x=0; x<positive_words.length; x++) {
 			if (arr[i].includes(positive_words[x]))
-				countObject[positive_words[x]] = countObject[positive_words[x]]+1
+				countObject[positive_words[x]]++
 				positive_count++
 		}
 		for (var x=0; x<negative_words.length; x++) {
 			if (arr[i].includes(negative_words[x]))
-				countObject[negative_words[x]] = countObject[negative_words[x]]+1
+				countObject[negative_words[x]]++
 				negative_count++
 		}
 	}
