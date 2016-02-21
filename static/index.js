@@ -18,6 +18,7 @@ $(document).ready(function() {
 		height: window.innerHeight*0.3,
 		width: window.innerWidth*0.5
 	})
+	};
 	var ctx = document.getElementById("chart").getContext("2d");
 	var chartData = [
 		{
@@ -33,9 +34,7 @@ $(document).ready(function() {
 			label: "Negative"
 		}
 	]
-	var chartOptions = {
-	
-	}
+	var chartOptions = {}
 	var chart = new Chart(ctx).Doughnut(chartData, chartOptions)
 };
 
