@@ -9,7 +9,7 @@ var express = require('express')
 var google = require('googleapis')
 var OAuth2 = google.auth.OAuth2;
 //var youtube = require("youtube")
-var youtube = google.youtube({version: 'v3'})
+var youtube = google.youtube({version: 'v3', auth: API_KEY})
 
 var app = express()
 
