@@ -120,7 +120,7 @@ function callQuery(query) {
 				console.log(i)
 				youtube.commentThreads.list({
 					videoId: response1.items[i].id.videoId,
-					part: 'snippet'
+					part: 'snippet',
 					textFormat: "plainText",
 					maxResults: 10,
 					key: API_KEY
