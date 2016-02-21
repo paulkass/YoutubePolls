@@ -36,7 +36,8 @@ app.get('/oauth2callback', function(req, res) {
     		console.log("OAuth Authentication Finished.")
     		youtube.search.list({
 				part: "snippet",
-				q: "holograms"
+				q: "holograms",
+				auth: oauth2Client
 			}, function(response) {
 				res.send(JSON.stringify(response))
 			})
