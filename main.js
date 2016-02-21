@@ -105,15 +105,16 @@ function callQuery(query) {
     	maxResults:3
     }, function(err, response) {
     	if (err) {
-    		console.log(JSON.stringify(err));
+    		console.log(JSON.stringify(err))
+    		return
     	} else {
-    		var id_array = [];
+    		var id_array = []
 			for(var i=0; i<response.items.length; i++) {
 				id_array.push(response.items[i].id.videoId);
 			}
 			var commentTexts = []
 			for (var i=0; i<id_array.length; i++) {
-				console.log(id_array[i])
+				console.log(i + " "+id_array[i])
 				youtube.commentThreads.list({
 					videoId: id_array[i],
 					part: 'snippet',
