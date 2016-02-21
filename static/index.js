@@ -15,8 +15,7 @@ $(document).ready(function() {
 		var obj = JSON.parse(data.split("::")[1])
 		$("section#resultsHead").html('')
 		$("#chart").css({
-			height: window.innerHeight*0.5,
-			width: window.innerWidth
+			height: window.innerHeight*0.5
 		})
 		var ctx = document.getElementById("chart").getContext("2d");
 		var chartData = [
@@ -74,24 +73,4 @@ function submitQuery() {
 	ws.send("query::"+ query[0].value);
 	console.log("emitted" + query[0].value);
 	$("section#resultsHead").html('<p class="col-sm-12">Obtaining Results...</p>');
-}
-
-function loadBoard(result) {
-	if(result === null || result === undefined)
-	{
-		$("section#resultsHead").html('<p class="col-sm-12">No Results</p>');
-	}
-	else
-	{
-		$("section#resultsHead").html("<p class='col-sm-12'>Results Found</p>");
-		$("section#pollresults").html(
-			'<table class="col-sm-12"><thead><tr><th>Search Query</th><th>Postive Comments</th><th>Negative Comments</th></tr></thead><tbody id="results"></tbody></table>'
-		);
-		var tabledata = "";
-//		result.forEach(function(data){
-			tabledata += "<tr><td>" + result.query + "</td><td>" + result.positive_count + "</td><td>" + result.negative_count + "</td></tr>";
-//		});
-			
-		$("tbody#results").append(tabledata);
-	}
 }
