@@ -115,7 +115,7 @@ function callQuery(query) {
     	}
     	else
     	{
-			for (var i=0; i <= response1.items.length; i++)
+			for (var i=0; i < response1.items.length; i++)
 			{
 				console.log(i)
 				youtube.commentThreads.list({
@@ -128,11 +128,6 @@ function callQuery(query) {
 					if (err)
 					{
 						console.log("2: "+JSON.stringify(err))
-						if(i == response1.items.length)
-						{
-							console.log("pushing")
-							return doAnalytics(comments)
-						}
 						return
 					}
 					else
@@ -143,8 +138,12 @@ function callQuery(query) {
 							console.log("text:" + text)
 							comments.push(text)
 						}
-
-					}
+						if(i == response1.items.length -1)
+						{
+							console.log("pushing")
+							return doAnalytics(comments)
+						}
+					}				
 				})
 			}
 		}
