@@ -32,10 +32,8 @@ var retdata
 //app.set('port', port);
 wss.on("connection", function(ws){
 	console.log("websocket server open")
+	ws.send("")
 	ws.on("open", function() {
-		var interval = setInterval(function() {
-        	ws.send("");
-    	}, 3000);
 		console.log("websocket connection open")
 	})
 	ws.on("message", function(data, flags) {
@@ -52,12 +50,12 @@ wss.on("connection", function(ws){
 			default:
 				break;
 		}
+		if(retdata !== undefined)
+		{
+			ws.send("object::"+JSON.stringify(retdata));
+			console.log("sent");
+		}
 	})
-	if(retdata !== undefined)
-	{
-		ws.send("object::"+JSON.stringify(retdata));
-		console.log("sent");
-	}
 	ws.on("close", function() {
 		console.log("websocket connection closed")
 	})
