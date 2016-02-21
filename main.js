@@ -113,7 +113,7 @@ function callQuery(query) {
 
 function processfirst(response){
 	
-	if(response.items[0].id.videoId === undefined)
+	if(response.items[0] === undefined)
 	{
 		console.log("1 " + JSON.stringify(response))
 		return
@@ -139,7 +139,7 @@ function processfirst(response){
 }
 
 function processsecond(response){
-	if(response.items[0].snippet.topLevelComment.snippet.textDisplay === undefined)
+	if(response.items[0] === undefined)
 	{
 		console.log("1 " + JSON.stringify(response))
 		return
