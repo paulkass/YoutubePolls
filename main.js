@@ -26,7 +26,6 @@ console.log("websocket server created")
 //var oauth2Client = new OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URL)
 
 //app.set('port', port);
-console.log("Port: "+app.get('port'))
 
 wss.on("connection", function(ws) {
   
@@ -106,6 +105,7 @@ function callQuery(query) {
 				id_array.push(response.items[i].id.videoId);
 			}
 			var commentTexts = []
+			var flag = true
 			for (var i=0; i<id_array.length; i++) {
 				console.log(id_array[i])
 				youtube.commentThreads.list({
@@ -123,11 +123,14 @@ function callQuery(query) {
 							//console.log(text)
 							commentTexts.push(text)
 						}
+						if (i==3 && flag) {
+							flag = false
+							console.log("pushing")
+							doAnalytics(commentTexts)
+						}
 					}
 				})
 			}
-			while(commentTexts.length==0) {}
-			doAnalytics(commentTexts)
 		}
 	})
 }
@@ -143,17 +146,24 @@ function doAnalytics(arr) {
 	for (var i=0; i<negative_words.length; i++) {
 		countObject[negative_words[i]]=0
 	}
+	var positive_count = 0
+	var negative_count = 0
 	for (var i=0; i<arr.length; i++) {
 		for (var x=0; x<positive_words.length; x++) {
 			if (arr[i].includes(positive_words[x]))
 				countObject[positive_words[x]] = countObject[positive_words[x]]+1
+				positive_count++
 		}
 		for (var x=0; x<negative_words.length; x++) {
 			if (arr[i].includes(negative_words[x]))
 				countObject[negative_words[x]] = countObject[negative_words[x]]+1
+				negative_count++
 		}
 	}
+	countObject.positive_count = positive_count
+	countObject.negative_count = negative_count
 	console.log(JSON.stringify(countObject))
+	ws.send("object::"+JSON.stringify(countObject));
 }
 
 // app.listen(app.get('port'), function() {
