@@ -30,31 +30,33 @@ var retdata
 //var oauth2Client = new OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URL)
 
 //app.set('port', port);
-wss.on("connection", function(socket){
+wss.on("connection", function(ws){
 	console.log("websocket server open")
-})
-ws.on("open", function() {
-	console.log("websocket connection open")
-})
-
-ws.on("close", function() {
-	console.log("websocket connection close")
-})
-ws.on("message", function(data, flags) {
-	console.log("begin")
-	var stuff = data.split("::")
-	var id = stuff[0]
-	var data = stuff[1]
-	switch (id) {
-		case "query":
-			retdata = callQuery(data)
-			console.log("retdata: " +JSON.stringify(retdata))
-			break
-		default:
-			break
+	ws.on("open", function() {
+		console.log("websocket connection open")
+	})
+	ws.on("message", function(data, flags) {
+		console.log("begin")
+		var stuff = data.split("::")
+		var id = stuff[0]
+		var data = stuff[1]
+		switch (id) {
+			case "query":
+				retdata = callQuery(data)
+				console.log("retdata: " +JSON.stringify(retdata))
+				break
+			default:
+				break
+		}
+	})
+	if(retdata !== undefined)
+	{
+		ws.send("object::"+JSON.stringify(retdata))
+		console.log("sent")
 	}
-	ws.send("object::"+JSON.stringify(retdata))
-	console.log("sent")
+	ws.on("close", function() {
+		console.log("websocket connection close")
+	})
 })
 // app.get('/', function(req, res) {
 // 	console.log("Got Request")
