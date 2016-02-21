@@ -12,7 +12,8 @@ var OAuth2 = google.auth.OAuth2;
 var youtube = google.youtube({version: 'v3'})
 
 var app = express()
-var io = require('socket.io')(app)
+var server = require('http').Server(app)
+var io = require('socket.io')(server)
 
 var oauth2Client = new OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URL)
 
