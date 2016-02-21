@@ -19,38 +19,42 @@ var port = (process.env.PORT || 5000);
 var server = http.createServer(app)
 server.listen(port)
 
+var WebSocket = require("ws")
+var ws = new WebSocket('ws://youtubepolls0.herokuapp.com/')
 var WebSocketServer = require("ws").Server
 var wss = new WebSocketServer({server: server})
 console.log("websocket server created")
+
 var retdata
 
 //var oauth2Client = new OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URL)
 
 //app.set('port', port);
-wss.on("connection", function(ws){
-	ws.on("open", function() {
-		console.log("websocket connection open")
-	})
-	
-	ws.on("close", function() {
-		console.log("websocket connection close")
-	})
-	ws.on("message", function(data, flags) {
-		console.log("begin")
-		var stuff = data.split("::")
-		var id = stuff[0]
-		var data = stuff[1]
-		switch (id) {
-			case "query":
-				retdata = callQuery(data)
-				console.log("retdata: " +JSON.stringify(retdata))
-				break
-			default:
-				break
-		}
-		ws.send("object::"+JSON.stringify(retdata))
-		console.log("sent")
-	})
+wss.on("connection", function(socket){
+	console.log("websocket server open")
+})
+ws.on("open", function() {
+	console.log("websocket connection open")
+})
+
+ws.on("close", function() {
+	console.log("websocket connection close")
+})
+ws.on("message", function(data, flags) {
+	console.log("begin")
+	var stuff = data.split("::")
+	var id = stuff[0]
+	var data = stuff[1]
+	switch (id) {
+		case "query":
+			retdata = callQuery(data)
+			console.log("retdata: " +JSON.stringify(retdata))
+			break
+		default:
+			break
+	}
+	ws.send("object::"+JSON.stringify(retdata))
+	console.log("sent")
 })
 // app.get('/', function(req, res) {
 // 	console.log("Got Request")
