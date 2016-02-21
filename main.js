@@ -25,7 +25,7 @@ var WebSocketServer = require("ws").Server
 var wss = new WebSocketServer({server: server})
 console.log("websocket server created")
 
-var retdata
+
 
 //var oauth2Client = new OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URL)
 
@@ -43,6 +43,7 @@ wss.on("connection", function(ws){
 		var stuff = data.split("::")
 		var id = stuff[0]
 		var data = stuff[1]
+		var retdata;
 		switch (id) {
 			case "query":
 				console.log("entering callQuery with" + data)
