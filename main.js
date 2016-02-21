@@ -136,7 +136,7 @@ function callQuery(query) {
 						for (var x=0; x<response.items.length; x++)
 						{
 							var text = response.items[x].snippet.topLevelComment.snippet.textDisplay;
-							//console.log(text)
+							console.log("text:" + text)
 							comments.push(text)
 						}
 					}
@@ -146,15 +146,6 @@ function callQuery(query) {
 	})
 	console.log("pushing")
 	return doAnalytics(comments)
-}
-
-function processsecond(response){
-	var comments = []
-	for (var x=0; x<response.items.length; x++)
-	{
-		var text = response.items[x].snippet.topLevelComment.snippet.textDisplay
-		comments.push(text)
-	}
 }
 
 function doAnalytics(arr) {
