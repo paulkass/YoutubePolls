@@ -47,10 +47,10 @@ wss.on("connection", function(ws){
 		switch (id) {
 			case "query":
 				console.log("entering callQuery with " + data)
-				var comments = JSON.parse(JSON.stringify(callQuery(data)));
+				var comments = JSON.parse(JSON.stringify(callQuery(data)))
 				console.log("entering doAnalytics with " + comments)
 				if(comments !== undefined)
-					retdata = JSON.parse(JSON.stringify(doAnalytics(comments)));
+					retdata = JSON.parse(JSON.stringify(doAnalytics(comments)))
 				console.log("retdata: " +JSON.stringify(retdata));
 				break;
 			default:
@@ -59,8 +59,8 @@ wss.on("connection", function(ws){
 		if(retdata !== undefined)
 		{
 			retdata.query = data;
-			ws.send(JSON.stringify(retdata));
-			console.log("sent");
+			ws.send(JSON.stringify(retdata))
+			console.log("sent")
 		}
 	})
 	ws.on("close", function() {
