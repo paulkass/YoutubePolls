@@ -39,6 +39,7 @@ $(document).ready(function() {
 				height: window.innerHeight*0.5
 			})
 			var ctx = document.getElementById("chart").getContext("2d");
+			clearContext(ctx, document.getElementById("chart"))
 			var chartData = [
 				{
 					value: obj.positive_count,
@@ -82,10 +83,16 @@ $(document).ready(function() {
 			$("#total_comments").html("<h4>Total Comments: "+obj.total_comments+"</h4>")
 		
 			var posCtx = document.getElementById("chart2").getContext("2d")
+			clearContext(posCtx, document.getElementById("chart2"))
 			populateChart(posCtx, obj.positive_words, obj, "Positive Words")
 		
 			var negCtx = document.getElementById("chart3").getContext("2d")
+			clearContext(negCtx, document.getElementById("chart3"))
 			populateChart(negCtx, obj.negative_words, obj, "Negative Words")
+			
+			function clearContext(context, canvas) {
+				context.clearRect(0, 0, canvas.width, canvas.height);
+			}
 		
 			function populateChart(context, labels, object, title) {
 				var curData = {
@@ -123,6 +130,6 @@ function submitQuery() {
 	ws.send("query::"+ query[0].value);
 	console.log("emitted" + query[0].value);
 	//$("section#resultsHead").html('<p class="col-sm-12">Obtaining Results...</p>');
-	$("#resultsHead").show("fade")
+	//$("#resultsHead").show()
 	
 }
