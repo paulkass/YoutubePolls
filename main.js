@@ -185,5 +185,6 @@ function doAnalytics(arr, callback) {
 	countObject.negative_count = negative_count
 	countObject.positive_words = positive_words
 	countObject.negative_words = negative_words
+	countObject.total_comments = arr.length
 	callback(countObject)
 }

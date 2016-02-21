@@ -5,6 +5,8 @@
 		<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"/>
+		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.js" type="application/javascript"></script>
 		<script src="index.js"></script>
 		<link rel="stylesheet" type="text/css" href="index.css">
@@ -24,12 +26,15 @@
 				<button class="btn btn-default" id="search">Crawl for Comments</button>
 			</div>			
 		</section>
-		<section id="resultsHead"></section>
 		<br/><br/>
+		<section id="resultsHead">
+			<div id="progressbar"></div>
+		</section>
 		<section id="pollresults">
 			<div>
 				<h3>Overall Results</h3>
 				<canvas id="chart"></canvas>
+				<p id="total_comments"></p>
 			</div>
 			<div>
 				<h3>Positive Word Count</h3>

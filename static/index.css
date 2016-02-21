@@ -45,6 +45,14 @@ canvas {
 	 width: 100%
 }
 
+#progressbar {
+	height: 30px;
+}
+
+#total_comments {
+	text-align: center
+}
+
 h3 {
 	text-align:center
 }

@@ -4,6 +4,7 @@ $(document).ready(function() {
 	load();
 	
 	$("#pollresults").hide()
+	$("#resultsHead").hide()
 	
 	$("button#search").click(submitQuery);
 	$("button#search").keypress(function(e){
@@ -11,9 +12,14 @@ $(document).ready(function() {
 			submitQuery();
 	});
 	
+	$( "#progressbar" ).progressbar({
+  		value: false
+	});
+	
 	ws = new WebSocket(host);
  	ws.onmessage = function(event){
- 	$("#pollresults").show()
+ 		$("#pollresults").show()
+ 		$("#resultsHead").hide()
 		if(event.data === "")
 			return;
 		var data = event.data
@@ -63,8 +69,8 @@ $(document).ready(function() {
     		//Boolean - Whether we animate scaling the Doughnut from the centre
     		animateScale : false
 		}
-
 		var chart = new Chart(ctx).Doughnut(chartData, chartOptions)
+		$("#total_comments").html("<h4>Total Comments: "+obj.total_comments+"</h4>")
 		
 		var posCtx = document.getElementById("chart2").getContext("2d")
 		populateChart(posCtx, obj.positive_words, obj, "Positive Words")
@@ -86,9 +92,7 @@ $(document).ready(function() {
 					}
 				]
 			}
-			var curOptions = {
-			
-			}
+			var curOptions = {}
 			
 			for (var i=0; i<labels.length; i++) {
 				curData.datasets[0].data.push(object[labels[i]])
@@ -100,7 +104,6 @@ $(document).ready(function() {
 	};
 });
 
-
 function load() {
 	$("section#intro").append("<p>Welcome to YoutubePolls!</p>");
 }
@@ -110,5 +113,6 @@ function submitQuery() {
 	$("input#inputTopic").val("");
 	ws.send("query::"+ query[0].value);
 	console.log("emitted" + query[0].value);
-	$("section#resultsHead").html('<p class="col-sm-12">Obtaining Results...</p>');
+	//$("section#resultsHead").html('<p class="col-sm-12">Obtaining Results...</p>');
+	$("#resultsHead").show()
 }
