@@ -53,7 +53,6 @@ wss.on("connection", function(ws) {
 function sendData(data) {
 	wss.on('connection', function(ws) {
 		ws.send("object::"+JSON.stringify(data));
-		console.log("sent");
 	});
 }
 
