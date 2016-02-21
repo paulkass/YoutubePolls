@@ -43,7 +43,7 @@ wss.on("connection", function(ws){
 		var data = stuff[1]
 		switch (id) {
 			case "query":
-				console.log("entering callQuery")
+				console.log("entering callQuery with" + data)
 				retdata = callQuery(data);
 				console.log("retdata: " +JSON.stringify(retdata));
 				break;
@@ -114,7 +114,7 @@ function callQuery(query) {
     	}
     	else
     	{
-			for (var i=0; i < response1.items.length; i++)
+			for (var i=0; i < response1.items.length; ++i)
 			{
 				console.log(i)
 				youtube.commentThreads.list({
@@ -132,7 +132,7 @@ function callQuery(query) {
 					else
 					{
 						var comments = []
-						for (var x=0; x<response2.items.length; x++)
+						for (var x=0; x<response2.items.length; ++x)
 						{
 							var text = response2.items[x].snippet.topLevelComment.snippet.textDisplay;
 							comments.push(text)
