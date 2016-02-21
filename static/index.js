@@ -62,7 +62,7 @@ $(document).ready(function() {
 			})
 		}
 		var ctx = document.getElementById("chart").getContext("2d");
-		clearContext(negCtx, document.getElementById("chart"))
+		clearContext(ctx, document.getElementById("chart"))
 		var chartData = [
 			{
 				value: findOrderedValue("positive_count", ordered),
@@ -108,7 +108,7 @@ $(document).ready(function() {
 		$("#total_comments").html("<h4>Total Comments: "+ordered[0].value+"</h4>")
 
 		var posCtx = document.getElementById("chart2").getContext("2d")
-		clearContext(negCtx, document.getElementById("chart2"))
+		clearContext(posCtx, document.getElementById("chart2"))
 		populateChart(posCtx, pos_words, ordered, "Positive Words")
 		
 		var negCtx = document.getElementById("chart3").getContext("2d")
