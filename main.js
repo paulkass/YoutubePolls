@@ -133,7 +133,7 @@ function first(err, response){
 }
 
 function second(err, response){
-	comments = []
+	var comments = []
 	if (err)
 	{
 		console.log("2 " + JSON.stringify(err))
