@@ -121,8 +121,6 @@ function callQuery(query, callback) {
 				if (num==id_array.length-1) {
 					doAnalytics(commentTexts, callback)
 				} else {
-					console.log(num)
-					console.log(JSON.stringify(id_array))
 					callYoutube(call, num+1)
 				}
 			}
@@ -184,7 +182,5 @@ function doAnalytics(arr, callback) {
 	countObject.positive_count = positive_count
 	countObject.negative_count = negative_count
 	countObject.positive_words = positive_words
-	countObject.negative_words = negative_words
-	console.log(JSON.stringify(countObject))
 	callback(countObject)
 }
