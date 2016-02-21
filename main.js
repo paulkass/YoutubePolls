@@ -8,7 +8,7 @@ var API_KEY = 'AIzaSyB_7jlnUHlve5_SDeefIDspy2eCjoptF7Q'
 var express = require('express')
 var google = require('googleapis')
 var OAuth2 = google.auth.OAuth2;
-var youtube = require("./v3.js")
+var youtube = require("./v3")
 
 var app = express()
 
