@@ -32,6 +32,7 @@ var retdata
 //app.set('port', port);
 wss.on("connection", function(ws){
 	console.log("websocket server open")
+	ws.ping();
 	ws.on("open", function() {
 		console.log("websocket connection open")
 	})
@@ -57,7 +58,6 @@ wss.on("connection", function(ws){
 	}
 	ws.on("close", function() {
 		console.log("websocket connection reopening")
-		ws.ping();
 	})
 })
 // app.get('/', function(req, res) {
