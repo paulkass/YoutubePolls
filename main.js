@@ -7,54 +7,69 @@ var API_KEY = 'AIzaSyB_7jlnUHlve5_SDeefIDspy2eCjoptF7Q'
 
 var express = require('express')
 var google = require('googleapis')
+var http = require('http')
 var OAuth2 = google.auth.OAuth2;
-//var youtube = require("youtube")
 var youtube = google.youtube({version: 'v3'})
 
 var app = express()
-var server = require('http').Server(app)
-var io = require('socket.io')(server)
 
-app.use('/static', express.static(__dirname+"/static"))
+app.use('/', express.static(__dirname+"/static"))
 
-var oauth2Client = new OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URL)
+var port = (process.env.PORT || 5000);
+var server = http.createServer(app)
+server.listen(port)
 
-app.set('port', (process.env.PORT || 5000));
+var WebSocketServer = require("ws").Server
+var wss = new WebSocketServer({server: server})
+console.log("websocket server created")
 
-io.on('connection', function(socket) {
-	socket.on('query', function(query) {
-		console.log("query received: "+query);
-	});
+//var oauth2Client = new OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URL)
+
+//app.set('port', port);
+console.log("Port: "+app.get('port'))
+
+wss.on("connection", function(ws) {
+  var id = setInterval(function() {
+    ws.send(JSON.stringify(new Date()), function() {  })
+  }, 1000)
+
+  console.log("websocket connection open")
+
+  ws.on("close", function() {
+    console.log("websocket connection close")
+    clearInterval(id)
+  })
 })
 
-app.get('/', function(req, res) {
-	console.log("Got Request")
-	//res.sendfile("index.html")
-	var scopes = ['https://www.googleapis.com/auth/youtube']
-	
-	var url = oauth2Client.generateAuthUrl({
-		scope: scopes
-	})
-	
-	res.redirect(url);
-});
+// app.get('/', function(req, res) {
+// 	console.log("Got Request")
+// 	//res.sendfile("index.html")
+// 	// var scopes = ['https://www.googleapis.com/auth/youtube']
+// // 	
+// // 	var url = oauth2Client.generateAuthUrl({
+// // 		scope: scopes
+// // 	})
+// // 	
+// // 	res.redirect(url);
+// });
 
-app.get('/oauth2callback', function(req, res) {
-	var code = req.query.code
-	//res.sendfile("index.html")
-	oauth2Client.getToken(code, function(err, tokens) {
-  		if(!err) {
-  			
-    		oauth2Client.setCredentials(tokens);
-    		console.log("OAuth Authentication Finished.")
-    		//console.log(JSON.stringify(youtube.videos))
-    		//callQuery(res)
-    		res.sendfile(__dirname+"/static/index.html")
-  		} else {
-  			console.log(JSON.stringify(err))
-  		}
-	});
-});
+// app.get('/', function(req, res) {
+// 	var code = req.query.code
+// 	res.sendfile(__dirname+"/static/index.html")
+// 	//res.sendfile("index.html")
+// 	// oauth2Client.getToken(code, function(err, tokens) {
+// //   		if(!err) {
+// //   			
+// //     		oauth2Client.setCredentials(tokens);
+// //     		console.log("OAuth Authentication Finished.")
+// //     		//console.log(JSON.stringify(youtube.videos))
+// //     		//callQuery(res)
+// //     		res.sendfile(__dirname+"/static/index.html")
+// //   		} else {
+// //   			console.log(JSON.stringify(err))
+// //   		}
+// // 	});
+// });
 
 function callQuery(res) {
 	// res.send("from_debugger:"+JSON.stringify(youtube))
@@ -70,7 +85,6 @@ function callQuery(res) {
     	part: 'snippet',
     	q: 'maroon 5 payphone',
     	key: API_KEY,
-    	auth: oauth2Client,
     	maxResults:3
     }, function(err, response) {
     	if (err) {
@@ -114,6 +128,6 @@ function doAnalytics(arr) {
 	var negative_words = ["suck", "boring", "idiot", "stupid", "appalling", "messed up"]
 }
 
-app.listen(app.get('port'), function() {
-
-});
+// app.listen(app.get('port'), function() {
+// 
+// });

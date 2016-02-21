@@ -19,6 +19,7 @@
   "homepage": "https://github.com/paulkass/YoutubePolls#readme",
   "dependencies": {
     "express": "^4.13.4",
-    "googleapis": "^2.1.7"
+    "googleapis": "^2.1.7",
+    "ws": "0.4.x"
   }
 }

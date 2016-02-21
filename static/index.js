@@ -1,11 +1,18 @@
 $(document).ready(function() {
 	load();
-	socket = io('https://youtubepolls.herokuapp.com/');
+	
 	$("button#search").click(submitQuery);
-	socket.onmessage = function(result){
-		loadBoard(result);
-	};
+// 	socket.onmessage = function(result){
+// 		loadBoard(result);
+// 	};
+
 });
+		var host = location.origin.replace(/^http/, 'ws')
+      var ws = new WebSocket(host);
+      ws.onmessage = function (event) {
+        alert(JSON.parse(event.data));
+		}
+	
 
 function load() {
 	$("section#intro").append("<p>Welcome to YoutubePolls!</p>");
@@ -14,8 +21,9 @@ function load() {
 function submitQuery() {
   var query = $("input").serializeArray();
   $("input#inputTopic").val("");
-  socket.emit('query', query[0].value);
-  alert("emitted" + query[0].value);
+  
+  //socket.emit('query', query[0].value);
+  console.log("emitted" + query[0].value);
   $("section#resultsHead").html('<p class="col-sm-12">Obtaining Results...</p>');
 }
 
