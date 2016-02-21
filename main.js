@@ -37,17 +37,16 @@ app.get('/oauth2callback', function(req, res) {
     		oauth2Client.setCredentials(tokens);
     		console.log("OAuth Authentication Finished.")
     		//console.log(JSON.stringify(youtube.videos))
-    		callQuery()
+    		callQuery(res)
   		} else {
   			console.log(JSON.stringify(err))
   		}
 	});
 });
 
-function callQuery() {
+function callQuery(res) {
 	youtube.videos.getRating({
     			id: 'KRaWnd3LJfs',
-    			key: API_KEY,
     			auth: oauth2Client
     		}, function(response) {
 				res.send(JSON.stringify("hi::::::"+response))
