@@ -56,7 +56,8 @@ wss.on("connection", function(ws){
 		console.log("sent")
 	}
 	ws.on("close", function() {
-		console.log("websocket connection close")
+		console.log("websocket connection reopening")
+		ws.resume();
 	})
 })
 // app.get('/', function(req, res) {
