@@ -9,7 +9,7 @@ var express = require('express')
 var google = require('googleapis')
 var OAuth2 = google.auth.OAuth2;
 //var youtube = require("youtube")
-var youtube = google.youtube({version: 'v3', key: API_KEY})
+var youtube = google.youtube({version: 'v3'})
 
 var app = express()
 
@@ -55,13 +55,11 @@ function callQuery(res) {
 //     res.send('Long url is'+response.longUrl);
 //   }
 // });
-	youtube.videos.list({
+	youtube.search.list({
     	part: 'snippet',
-    	maxResults: '3',
-    	order: 'viewCount',
     	q: 'maroon 5 payphone',
-    	type: 'video',
-    	forMine: false
+    	key: API_KEY,
+    	auth: oauth2Client
     }, function(err, response) {
     	if (err) {
     		res.send(JSON.stringify(err));
