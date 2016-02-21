@@ -51,10 +51,10 @@ wss.on("connection", function(ws) {
 })
 
 function sendData(data) {
-	wss.on('connection', function(ws) {
+//	wss.on('connection', function(ws) {
 		ws.send("object::"+JSON.stringify(data));
 		console.log("sent");
-	});
+//	});
 }
 
 // app.get('/', function(req, res) {
