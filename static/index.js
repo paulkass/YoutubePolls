@@ -105,7 +105,7 @@ $(document).ready(function() {
 		ordered.splice(0,2);
 
 		var chart = new Chart(ctx).Doughnut(chartData, chartOptions)
-		$("#total_comments").html("<h4>Total Comments: "+ordered[0].value+"</h4>")
+		$("#total_comments").html("<h4>Total Comments: "+obj.total_comments+"</h4>")
 
 		var posCtx = document.getElementById("chart2").getContext("2d")
 		clearContext(posCtx, document.getElementById("chart2"))
@@ -148,6 +148,8 @@ $(document).ready(function() {
 					}
 				}
 			}
+			
+			var curChart = new Chart(context).Bar(curData, curOptions);
 		}
 	};
 });
