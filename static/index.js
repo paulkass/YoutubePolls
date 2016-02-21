@@ -19,7 +19,30 @@ ws.onmessage = function(event){
 	var data = event.data
 	var stub = data.split("::")[0]
 	var obj = JSON.parse(data.split("::")[1])
-	console.log(obj.positive_count)
+	$("section#resultsHead").html('')
+	$("#chart").css({
+		height: window.innerHeight*0.3,
+		width: window.innerWidth*0.5
+	})
+	var ctx = document.getElementById("chart").getContext("2d");
+	var chartData = [
+		{
+			value: obj.positive_count,
+			color: "#46BFBD",
+			highlight: "#5AD3D1",
+			label: "Positive"
+		},
+		{
+			value: obj.negative_count,
+			color: "#F7464A",
+			highlight: "#FF5A5E",
+			label: "Negative"
+		}
+	]
+	var chartOptions = {
+	
+	}
+	var chart = new Chart(ctx).Doughnut(chartData, chartOptions)
 };
 	
 
