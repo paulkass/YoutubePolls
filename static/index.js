@@ -7,9 +7,11 @@ $(document).ready(function() {
 	$("#resultsHead").hide()
 	
 	$("button#search").click(submitQuery);
-	$("button#search").keypress(function(e){
-		if(e.which === 13)
-			submitQuery();
+	$("#inputTopic").keypress(function(e){
+		if(e.which == 13) {
+			e.preventDefault()
+			submitQuery()
+		}
 	});
 	
 	$( "#progressbar" ).progressbar({
