@@ -100,15 +100,17 @@ function callQuery(query) {
 //   }
 // });
 	var comments = []
+	var first;
 	var firstreq = youtube.search.list({
     	part: 'snippet',
     	q: query,
     	key: API_KEY,
     	maxResults:3
-    })
-    var first;
-    firstreq.execute(function(response) {
-    	first = response;
+    }, function(err, response) {
+    	if(err)
+    		console.log("1: " + JSON.stringify(response));
+    	else
+    		first = response;
 	})
     comments = processfirst(first)
 	console.log("analyzing " +JSON.stringify(comments))
@@ -130,17 +132,19 @@ function processfirst(response){
 		var comments = []
 		for(var i=0; i<response.items.length; i++)
 		{
-			var second;
 			console.log(i + " "+response.items[i].id.videoId)
+			var second;
 			var secondreq = youtube.commentThreads.list({
 				videoId: response.items[i].id.videoId,
 				part: 'snippet',
 				textFormat: "plainText",
 				maxResults: 10,
 				key: API_KEY
-			})
-			secondreq.execute(function(response) {
-    			second = response;
+			}, function(err, response) {
+    			if(err)
+    				console.log("2: " + JSON.stringify(response));
+    			else
+    				second = response;
 			})
 			comments.concat(processsecond(second))
 		}
@@ -150,21 +154,13 @@ function processfirst(response){
 }
 
 function processsecond(response){
-	if(response.items === undefined)
+	var comments = []
+	for (var x=0; x<response.items.length; x++)
 	{
-		console.log("1 " + JSON.stringify(response))
-		return
+		var text = response.items[x].snippet.topLevelComment.snippet.textDisplay
+		comments.push(text)
 	}
-	else
-	{
-		var comments = []
-		for (var x=0; x<response.items.length; x++)
-		{
-			var text = response.items[x].snippet.topLevelComment.snippet.textDisplay
-			comments.push(text)
-		}
-		return comments
-	}
+	return comments
 }
 
 function doAnalytics(arr) {
