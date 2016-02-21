@@ -42,6 +42,7 @@ wss.on("connection", function(ws){
 		var data = stuff[1]
 		switch (id) {
 			case "query":
+				console.log("entering callQuery")
 				retdata = callQuery(data)
 				console.log("retdata: " +JSON.stringify(retdata))
 				break
