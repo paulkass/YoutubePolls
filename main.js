@@ -115,7 +115,7 @@ function callQuery(query) {
     	}
     	else
     	{
-			for (var i=0; i <= respons1e.items.length; i++)
+			for (var i=0; i <= response1.items.length; i++)
 			{
 				console.log(i)
 				youtube.commentThreads.list({
