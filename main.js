@@ -37,11 +37,11 @@ wss.on("connection", function(ws) {
   		
   		switch (id) {
   			case "query":
-  				//retdata = callQuery(data)
-  				retdata = null;
+  				retdata = callQuery(data)
   				console.log("Finished pushing")
   				break
   			default:
+  				break
   		}
   		ws.send("object::"+JSON.stringify(retdata));
 		console.log("sent");
