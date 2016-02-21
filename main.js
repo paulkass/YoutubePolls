@@ -102,50 +102,53 @@ function callQuery(query) {
 //   }
 // });
 	var comments = []
-	var first;
-	var firstreq = youtube.search.list({
+	youtube.search.list({
     	part: 'snippet',
     	q: query,
     	key: API_KEY,
     	maxResults:3
-    }, function(err, response) {
+    }, function(err, response1) {
     	if (err)
     	{
-    		console.log(JSON.stringify(err))
+    		console.log("1: "+JSON.stringify(err))
     		return
     	}
     	else
     	{
-			for (var i=0; i<response.items.length; i++)
+			for (var i=0; i <= respons1e.items.length; i++)
 			{
 				console.log(i)
 				youtube.commentThreads.list({
-					videoId: response.items[i].id.videoId,
-					part: 'snippet',
+					videoId: response1.items[i].id.videoId,
+					part: 'snippet'
 					textFormat: "plainText",
 					maxResults: 10,
 					key: API_KEY
-				}, function(err, response) {
+				}, function(err, response2) {
 					if (err)
 					{
-						console.log("2"+JSON.stringify(err))
+						console.log("2: "+JSON.stringify(err))
+						if(i == response1.items.length)
+						{
+							console.log("pushing")
+							return doAnalytics(comments)
+						}
 						return
 					}
 					else
 					{
-						for (var x=0; x<response.items.length; x++)
+						for (var x=0; x<response2.items.length; x++)
 						{
-							var text = response.items[x].snippet.topLevelComment.snippet.textDisplay;
+							var text = response2.items[x].snippet.topLevelComment.snippet.textDisplay;
 							console.log("text:" + text)
 							comments.push(text)
 						}
+
 					}
 				})
 			}
 		}
 	})
-	console.log("pushing")
-	return doAnalytics(comments)
 }
 
 function doAnalytics(arr) {
