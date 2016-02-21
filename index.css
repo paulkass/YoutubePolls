@@ -32,3 +32,9 @@ a
 	color: black;
 	font-weight: bold;
 }
+th, td
+{
+	text-align: center;
+	border: 1px solid black;
+	padding: 1px;
+}
