@@ -46,17 +46,17 @@ wss.on("connection", function(ws){
 		switch (id) {
 			case "query":
 				console.log("entering callQuery")
-				retdata = callQuery(data)
-				console.log("retdata: " +JSON.stringify(retdata))
-				break
+				retdata = callQuery(data);
+				console.log("retdata: " +JSON.stringify(retdata));
+				break;
 			default:
-				break
+				break;
 		}
 	})
 	if(retdata !== undefined)
 	{
-		ws.send("object::"+JSON.stringify(retdata))
-		console.log("sent")
+		ws.send("object::"+JSON.stringify(retdata));
+		console.log("sent");
 	}
 	ws.on("close", function() {
 		console.log("websocket connection closed")
