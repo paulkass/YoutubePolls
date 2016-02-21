@@ -46,6 +46,6 @@ function loadBoard(result) {
 			tabledata += "<tr><td>" + result.query + "</td><td>" + result.positive_count + "</td><td>" + result.negative_count + "</td></tr>";
 //		});
 			
-		$("tbody#results").append(tableappend);
+		$("tbody#results").append(tabledata);
 	}
 }

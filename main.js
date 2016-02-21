@@ -161,7 +161,7 @@ function doAnalytics(arr) {
 	var positive_words = ["good", "great", "awesome", "amazing", "fantastic", "best", "love"]
 	var negative_words = ["suck", "boring", "idiot", "stupid", "appalling", "messed up", "hate"]
 	var countObject = {}
-	//console.log(JSON.stringify(arr))
+	console.log("arr: " + JSON.stringify(arr))
 	for (var i=0; i<positive_words.length; i++) {
 		countObject[positive_words[i]]=0
 	}
