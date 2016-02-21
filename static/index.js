@@ -31,6 +31,7 @@ $(document).ready(function() {
 		var ordered = []		
 		var pos_words = []
 		var neg_words = []
+		var total_comments = obj.total_comments
 		for (var i = 0; i < obj.positive_words.length; i++) {
 			pos_words[i] = obj.positive_words[i]
 		}
@@ -105,7 +106,7 @@ $(document).ready(function() {
 		ordered.splice(0,2);
 
 		var chart = new Chart(ctx).Doughnut(chartData, chartOptions)
-		$("#total_comments").html("<h4>Total Comments: "+obj.total_comments+"</h4>")
+		$("#total_comments").html("<h4>Total Comments: "+total_comments+"</h4>")
 
 		var posCtx = document.getElementById("chart2").getContext("2d")
 		clearContext(posCtx, document.getElementById("chart2"))
