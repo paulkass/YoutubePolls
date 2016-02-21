@@ -60,7 +60,8 @@ function callQuery(res) {
     	maxResults: '3',
     	order: 'viewCount',
     	q: 'maroon 5 payphone',
-    	type: 'video'
+    	type: 'video',
+    	forMine: false
     }, function(err, response) {
     	if (err) {
     		res.send(JSON.stringify(err));
