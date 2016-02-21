@@ -19,17 +19,23 @@ var port = (process.env.PORT || 5000);
 var server = http.createServer(app)
 server.listen(port)
 
+var WebSocket = require("ws")
+var ws = new WebSocket('ws://youtubepolls0.herokuapp.com/')
 var WebSocketServer = require("ws").Server
 var wss = new WebSocketServer({server: server})
 console.log("websocket server created")
 
+
+
 //var oauth2Client = new OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URL)
 
 //app.set('port', port);
-
 wss.on("connection", function(ws) {
-  
-  ws.on("message", function(data, flags) {
+ 	console.log("websocket connection open")
+	setInterval(function(){
+		ws.send("")
+	},10000) 
+	ws.on("message", function(data, flags) {
   		var stuff = data.split("::")
   		var id = stuff[0]
   		var data = stuff[1]
@@ -45,19 +51,10 @@ wss.on("connection", function(ws) {
   			
   		}
   });
-
-  console.log("websocket connection open")
-
   ws.on("close", function() {
     console.log("websocket connection close")
   })
 })
-
-function sendData(data) {
-	wss.on('connection', function(ws) {
-		ws.send("object::"+JSON.stringify(data));
-	});
-}
 
 // app.get('/', function(req, res) {
 // 	console.log("Got Request")
@@ -189,7 +186,3 @@ function doAnalytics(arr, callback) {
 	console.log(JSON.stringify(countObject))
 	callback(countObject)
 }
-
-// app.listen(app.get('port'), function() {
-// 
-// });
