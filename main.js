@@ -123,7 +123,7 @@ function callQuery(query) {
 				console.log(i)
 				if(i == response1.items.length)
 				{
-					console.log("pushing")
+					console.log("pushing "+JSON.stringify(comments))
 					var result = doAnalytics(comments)
 					return result;				
 				}
