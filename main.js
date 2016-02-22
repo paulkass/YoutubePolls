@@ -5,8 +5,8 @@ var CLIENT_SECRET = 'y5qJVqIbihHKntf6NbV6yzon'
 var REDIRECT_URL = 'http://youtubepolls.herokuapp.com/oauth2callback'
 var API_KEY = 'AIzaSyB_7jlnUHlve5_SDeefIDspy2eCjoptF7Q'
 
-var VIDEO_COUNT = 3
-var COMMENT_COUNT = 50
+var VIDEO_COUNT = 10
+var COMMENT_COUNT = 100
 
 var express = require('express')
 var google = require('googleapis')
@@ -61,46 +61,7 @@ function setUpSocket() {
 
 setUpSocket()
 
-// app.get('/', function(req, res) {
-// 	console.log("Got Request")
-// 	//res.sendfile("index.html")
-// 	// var scopes = ['https://www.googleapis.com/auth/youtube']
-// // 	
-// // 	var url = oauth2Client.generateAuthUrl({
-// // 		scope: scopes
-// // 	})
-// // 	
-// // 	res.redirect(url);
-// });
-
-// app.get('/', function(req, res) {
-// 	var code = req.query.code
-// 	res.sendfile(__dirname+"/static/index.html")
-// 	//res.sendfile("index.html")
-// 	// oauth2Client.getToken(code, function(err, tokens) {
-// //   		if(!err) {
-// //   			
-// //     		oauth2Client.setCredentials(tokens);
-// //     		console.log("OAuth Authentication Finished.")
-// //     		//console.log(JSON.stringify(youtube.videos))
-// //     		//callQuery(res)
-// //     		res.sendfile(__dirname+"/static/index.html")
-// //   		} else {
-// //   			console.log(JSON.stringify(err))
-// //   		}
-// // 	});
-// });
-
 function callQuery(query, callback) {
-	// res.send("from_debugger:"+JSON.stringify(youtube))
-	// var params = { shortUrl: 'http://goo.gl/xKbRu3' };
-// 	youtube.url.get(params, function (err, response) {
-//   if (err) {
-//     res.send('Encountered error'+JSON.stringify(err));
-//   } else {
-//     res.send('Long url is'+response.longUrl);
-//   }
-// });
 	youtube.search.list({
     	part: 'snippet',
     	q: query,
@@ -139,6 +100,7 @@ function callQuery(query, callback) {
 					part: 'snippet',
 					textFormat: "plainText",
 					maxResults: COMMENT_COUNT,
+					order: 'time',
 					key: API_KEY
 				}, function(err, response) {
 					if (err) {

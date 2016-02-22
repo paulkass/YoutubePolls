@@ -18,10 +18,6 @@ $(document).ready(function() {
 		}
 	});
 	
-	$( "#progressbar" ).progressbar({
-  		value: false
-	});
-	
 	ws = new WebSocket(host);
  	ws.onmessage = function(event){
  		$("#resultsHead").hide()
@@ -183,5 +179,6 @@ function submitQuery() {
 		current_charts[i].destroy()
 	}
 	current_charts = []
+	$("#resultsHead").show()
 	
 }

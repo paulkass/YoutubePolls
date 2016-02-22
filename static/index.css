@@ -61,6 +61,12 @@ h3 {
 	margin: 0 auto;
 }
 
+#resultsHead {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+
 td
 {
 	background-color: cyan
