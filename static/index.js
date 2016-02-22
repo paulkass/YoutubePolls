@@ -44,9 +44,9 @@ $(document).ready(function() {
 			$("canvas").css({
 				height: window.innerHeight*0.5
 			})
-			$("h3#overall").html('Overall Results for ' +query[0].value)
-			$("h3#positive").html('Positive Word Count for ' +query[0].value)
-			$("h3#negative").html('Negative Word Count for ' +query[0].value)
+			$("h3#overall").html('Overall Results for "' +query[0].value+'"')
+			$("h3#positive").html('Positive Word Count for "' +query[0].value+'"')
+			$("h3#negative").html('Negative Word Count for "' +query[0].value+'"')
 
 			var ordered = []		
 			var pos_words = []
