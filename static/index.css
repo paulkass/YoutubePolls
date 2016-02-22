@@ -67,6 +67,14 @@ h3 {
 	left: 0px;
 }
 
+#retry_query {
+	
+}
+
+#wrapper {
+	text-align:center;
+}
+
 td
 {
 	background-color: cyan

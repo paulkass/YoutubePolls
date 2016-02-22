@@ -17,6 +17,10 @@ $(document).ready(function() {
 			submitQuery()
 		}
 	});
+	$("#retry_query").click(function() {
+		$("#inputTopic").val(query[0].value)
+		submitQuery()
+	})
 	
 	ws = new WebSocket(host);
  	ws.onmessage = function(event){
