@@ -72,9 +72,14 @@ function callQuery(query, callback) {
     		console.log(JSON.stringify(err));
     		bailOut(callback, err)
     	} else {
+    		//console.log(JSON.stringify(response))
     		var id_array = [];
 			for(var i=0; i<response.items.length; i++) {
-				id_array.push(response.items[i].id.videoId);
+				var id = response.items[i].id.videoId
+				if (id==undefined) {}
+				else {
+					id_array.push(id);
+				}
 			}
 			var commentTexts = []
 			var flag = true
